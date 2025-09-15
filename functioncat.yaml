@@ -1,0 +1,31 @@
+system: 1.0.0
+info:
+  name: React + TailwindCSS + ShadcnUI + Vite Template
+  vars: {}
+
+envs:
+  dev:
+    branch: main
+  prod:
+    branch: main
+
+routes:
+  main_env: prod
+  main_app: frontend
+
+apps:
+  frontend:
+    type: web_frontend
+    envs:
+      dev:
+        build:
+          script: npm install; npm run build
+        provision:
+          root_path: dist
+          type: nodejs18x
+      prod:
+        build:
+          script: npm install; npm run build
+        provision:
+          root_path: dist
+          type: nodejs18x
