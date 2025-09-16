@@ -1,35 +1,27 @@
 ========================================
 COURSE
 ========================================
-TITLE: 1-搭建 React + TailwindCSS + ShadcnUI + Vite 开发环境
-DESCRIPTION: 学习如何搭建基于 React、TailwindCSS、ShadcnUI 和 Vite 的现代化前端开发环境，包括环境配置、依赖安装和基础项目结构
+TITLE: 搭建本地环境
+DESCRIPTION: 学习如何在本地环境中设置和运行 React + TailwindCSS + ShadcnUI + Vite 项目
 DIFFICULTY: beginner
-ESTIMATED_TIME: 30
-PREREQUISITES: 基本的命令行操作知识、Node.js 基础
-TAGS: react, tailwindcss, shadcnui, vite, 环境搭建
+ESTIMATED_TIME: 15
+PREREQUISITES: node-js, npm
+TAGS: react, tailwindcss, shadcnui, vite, setup
 
 PROJECT_FILES:
 package.json
-vite.config.js
-tailwind.config.js
-postcss.config.js
 src/
-src/components/
-src/lib/
-src/assets/
 src/App.tsx
 src/main.tsx
-src/index.css
-components.json
+vite.config.ts
+tsconfig.json
 
 STEPS:
-
-STEP: 安装 Node.js 环境和包管理器
-
+STEP: 检查 Node.js 和 npm 环境
 FILE: package.json
 LANGUAGE: json
 CODE:
-```json
+```
 {
   "name": "react-tailwind-shadcn-template",
   "private": true,
@@ -42,211 +34,247 @@ CODE:
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.43",
-    "@types/react-dom": "^18.2.17"
   }
 }
 ```
-HIGHLIGHTS: 1-15
+HIGHLIGHTS: 
+/"dev": "vite"/
+/"build": "tsc && vite build"/
 
 CONTENT:
-## 安装 Node.js 环境和包管理器
+# 搭建本地环境
 
-要搭建现代化前端开发环境，首先需要安装 Node.js 运行时环境。
+在开始开发之前，我们需要确保本地开发环境已经正确设置。本课程将指导您完成整个过程。
 
-### 1. 安装 Node.js
+## 检查 Node.js 和 npm 环境
 
-访问 [Node.js 官网](https://nodejs.org/) 下载并安装最新的 LTS 版本的 Node.js。安装完成后，可以通过以下命令验证是否安装成功：
+首先，确保您的系统中已安装 Node.js 和 npm。您可以通过以下命令检查：
 
 ```bash
 node --version
 npm --version
 ```
 
-期望结果：命令行能正确显示 Node.js 和 npm 的版本号。
+推荐使用 Node.js 16+ 版本以获得最佳性能和兼容性。
 
-### 2. 使用 pnpm 作为包管理器
-
-本模板推荐使用 pnpm 作为包管理器，它比 npm 和 yarn 更快且更节省磁盘空间。通过以下命令安装 pnpm：
-
-```bash
-npm install -g pnpm
-```
-
-安装完成后验证：
-
-```bash
-pnpm --version
-```
-
-期望结果：能够正常使用 pnpm 命令安装依赖。
---------------------
-STEP: 创建 Vite 项目和安装依赖
-
-FILE: package.json
-LANGUAGE: json
-CODE:
-```json
-{
-  "name": "react-tailwind-shadcn-template",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "@types/react": "^18.2.43",
-    "@types/react-dom": "^18.2.17",
-    "@typescript-eslint/eslint-plugin": "^6.14.0",
-    "@typescript-eslint/parser": "^6.14.0",
-    "@vitejs/plugin-react": "^4.2.1",
-    "eslint": "^8.55.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.5",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.8"
-  }
-}
-```
-HIGHLIGHTS: 6-25
-
-CONTENT:
-## 创建 Vite 项目和安装依赖
-
-### 1. 使用 Vite 创建项目
-
-使用 Vite 脚手架创建一个新的 React + TypeScript 项目：
-
-```bash
-pnpm create vite@latest my-app --template react-ts
-cd my-app
-```
-
-### 2. 安装项目依赖
-
-进入项目目录后，安装所有依赖项：
-
-```bash
-pnpm install
-```
-
-### 3. 启动开发服务器
-
-安装完成后，启动开发服务器：
-
-```bash
-pnpm run dev
-```
-
-期望结果：开发服务器成功启动，并在浏览器中可以访问网站，默认地址为 [http://localhost:5173](http://localhost:5173)
-
-### 4. 项目脚本说明
-
-项目的 package.json 中包含了几个有用的脚本：
-
+项目中的 [package.json](file:///Users/bondchen/abucode/templates/basic/react-template/package.json) 文件包含了项目的所有依赖和可用脚本。您可以看到定义了以下几个关键脚本：
 - `dev`: 启动开发服务器
 - `build`: 构建生产版本
+- `preview`: 预览生产构建
 - `lint`: 运行代码检查
-- `preview`: 预览生产版本
---------------------
-STEP: 配置 TailwindCSS
 
-FILE: tailwind.config.js
-LANGUAGE: javascript
+这些脚本将用于项目的不同阶段。
+--------------------
+STEP: 安装项目依赖
+FILE: package.json
+LANGUAGE: shell
 CODE:
-```javascript
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
 ```
-HIGHLIGHTS: 1-15
+npm install
+```
+HIGHLIGHTS: 
+/npm install/
 
 CONTENT:
-## 配置 TailwindCSS
+# 安装项目依赖
 
-TailwindCSS 是一个功能类优先的 CSS 框架，可以帮助我们快速构建现代化的用户界面。
-
-### 1. 安装 TailwindCSS 及其依赖
-
-在项目根目录下运行以下命令安装 TailwindCSS：
+在项目根目录中打开终端，运行以下命令安装所有必需的依赖项：
 
 ```bash
-pnpm install -D tailwindcss postcss autoprefixer
-pnpm dlx tailwindcss init -p
+npm install
 ```
 
-### 2. 配置 TailwindCSS
+这将根据 [package.json](file:///Users/bondchen/abucode/templates/basic/react-template/package.json) 中定义的依赖项安装所有包。安装过程可能需要一些时间，具体取决于您的网络速度。
 
-编辑 tailwind.config.js 文件，配置内容路径：
+依赖项包括：
+- React 和相关库
+- TailwindCSS 和相关工具
+- ShadcnUI 组件
+- Vite 构建工具
+- TypeScript 和相关类型定义
+--------------------
+STEP: 启动开发服务器
+FILE: package.json
+LANGUAGE: shell
+CODE:
+```
+npm run dev
+```
+HIGHLIGHTS: 
+/npm run dev/
 
-```javascript
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
+CONTENT:
+# 启动开发服务器
+
+依赖安装完成后，您可以启动开发服务器：
+
+```bash
+npm run dev
 ```
 
-### 3. 添加 Tailwind 指令到 CSS
+此命令将启动 Vite 开发服务器，默认情况下在 [http://localhost:5173](http://localhost:5173) 上运行。
 
-在 src/index.css 文件中添加 Tailwind 的基础指令：
+Vite 提供了许多现代开发功能：
+- 快速的冷启动
+- 即时的模块热更新（HMR）
+- 按需编译，只编译当前页面使用的代码
+- 丰富的错误提示
 
-```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-```
-
-### 4. 测试 TailwindCSS
-
-在 App.tsx 中添加一些 TailwindCSS 类来测试配置是否成功：
-
-```jsx
-function App() {
-  return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <h1 className="text-3xl font-bold text-purple-600">
-        Hello, TailwindCSS!
-      </h1>
-    </div>
-  )
-}
-```
-
-重启开发服务器后，应该能看到应用了 TailwindCSS 样式的页面。
+您应该能在浏览器中看到项目的欢迎页面，这意味着您的本地环境已经成功搭建。
 ----------------------------------------
-TITLE: 2-集成 ShadcnUI 和项目结构详解
-DESCRIPTION: 学习如何在 React 项目中集成 ShadcnUI 组件库，理解项目目录结构和各部分的作用
+TITLE: 部署到函数猫
+DESCRIPTION: 学习如何将 React + TailwindCSS + ShadcnUI + Vite 项目部署到 FunctionCat 平台
 DIFFICULTY: beginner
-ESTIMATED_TIME: 35
-PREREQUISITES: 完成第一节课的所有内容
-TAGS: shadcnui, 项目结构, 组件库, ui-components
+ESTIMATED_TIME: 10
+PREREQUISITES: 搭建本地环境
+TAGS: deployment, functioncat, hosting
+
+PROJECT_FILES:
+functioncat.yaml
+package.json
+src/
+dist/
+
+STEPS:
+STEP: 了解 FunctionCat 部署配置
+FILE: functioncat.yaml
+LANGUAGE: yaml
+CODE:
+```
+system: 1.0.0
+info:
+  name: React + TailwindCSS + ShadcnUI + Vite Template
+  vars: {}
+
+envs:
+  dev:
+    branch: main
+  prod:
+    branch: main
+
+routes:
+  main_env: prod
+  main_app: frontend
+
+apps:
+  frontend:
+    type: web_frontend
+    envs:
+      dev:
+        build:
+          script: npm install; npm run build
+        provision:
+          root_path: dist
+          type: nodejs18x
+      prod:
+        build:
+          script: npm install; npm run build
+        provision:
+          root_path: dist
+          type: nodejs18x
+```
+HIGHLIGHTS: 
+/system: 1\.0\.0/
+/type: web_frontend/
+/(?s)dev:.*? npm run build/
+
+
+CONTENT:
+# 部署到函数猫
+
+FunctionCat 是一个现代化的应用托管平台，支持一键部署您的前端应用。本模板已经预配置了部署设置，使您能够轻松地将应用部署到 FunctionCat。
+
+## 了解 FunctionCat 部署配置
+
+部署配置在 [functioncat.yaml](file:///Users/bondchen/abucode/templates/basic/react-template/functioncat.yaml) 文件中定义。这个文件告诉 FunctionCat 如何构建和部署您的应用：
+
+- `system`: FunctionCat 配置版本
+- `apps.frontend.type`: 应用类型（web_frontend 表示这是一个前端 Web 应用）
+- `apps.frontend.envs.dev.build.script`: 开发环境构建脚本
+- `apps.frontend.envs.prod.build.script`: 生产环境构建脚本
+- `provision.root_path`: 构建产物目录（dist）
+
+您可以看到构建脚本包括两个步骤：
+1. `npm install` - 安装依赖
+2. `npm run build` - 构建生产版本
+
+构建产物将放在 [dist](file:///Users/bondchen/abucode/templates/basic/react-template/dist) 目录中，这是 FunctionCat 将提供服务的目录。
+--------------------
+STEP: 在 FunctionCat 上部署应用
+FILE: README.md
+LANGUAGE: markdown
+CODE:
+```
+## 部署
+
+此模板已准备好在 FunctionCat 上部署。只需按照 FunctionCat 平台中的标准部署流程操作即可。
+```
+HIGHLIGHTS: 
+/## 部署/
+/此模板已准备好在 FunctionCat 上部署。只需按照 FunctionCat 平台中的标准部署流程操作即可。/
+
+CONTENT:
+# 在 FunctionCat 上部署应用
+
+要在 FunctionCat 上部署您的应用，请按照以下步骤操作：
+
+1. 将您的代码推送到 Git 仓库（GitHub、GitLab 或 Gitee）
+2. 登录 FunctionCat 控制台
+3. 创建新应用或选择现有应用
+4. 连接您的 Git 仓库
+5. 配置部署设置（如果需要）
+6. 触发部署
+
+FunctionCat 将自动：
+- 克隆您的代码
+- 运行构建脚本（`npm install; npm run build`）
+- 将 [dist](file:///Users/bondchen/abucode/templates/basic/react-template/dist) 目录部署为静态网站
+
+部署完成后，您将获得一个 FunctionCat 提供的 URL，您的应用就可以通过这个 URL 访问了。
+
+由于模板已经配置了 [functioncat.yaml](file:///Users/bondchen/abucode/templates/basic/react-template/functioncat.yaml) 文件，因此大部分配置已经自动完成，您只需关注代码本身。
+--------------------
+STEP: 构建和预览生产版本
+FILE: package.json
+LANGUAGE: shell
+CODE:
+```
+npm run build
+npm run preview
+```
+HIGHLIGHTS: 
+/npm run build/
+/npm run preview/
+
+CONTENT:
+# 构建和预览生产版本
+
+在部署之前，您可以本地构建和预览生产版本以确保一切正常：
+
+1. 构建生产版本：
+   ```bash
+   npm run build
+   ```
+
+2. 预览生产版本：
+   ```bash
+   npm run preview
+   ```
+
+`npm run build` 命令将执行 TypeScript 编译和 Vite 构建过程，生成优化的生产代码并放置在 [dist](file:///Users/bondchen/abucode/templates/basic/react-template/dist) 目录中。
+
+`npm run preview` 命令将在本地启动一个服务器来预览构建后的应用，让您在部署前确认一切正常。
+
+这些命令与 FunctionCat 上的部署过程使用相同的脚本，确保本地和线上环境的一致性。
+----------------------------------------
+TITLE: 项目结构介绍
+DESCRIPTION: 深入了解 React + TailwindCSS + ShadcnUI + Vite 模板的项目结构和各个文件的作用
+DIFFICULTY: beginner
+ESTIMATED_TIME: 15
+PREREQUISITES: 搭建本地环境
+TAGS: project-structure, file-organization, architecture
 
 PROJECT_FILES:
 src/
@@ -258,16 +286,302 @@ src/App.tsx
 src/main.tsx
 src/index.css
 components.json
+tailwind.config.js
+postcss.config.js
+vite.config.ts
+tsconfig.json
 package.json
 
 STEPS:
+STEP: 主要目录和文件概览
+FILE: README.md
+LANGUAGE: markdown
+CODE:
+```
+## 项目结构
 
-STEP: 项目结构概览
 
+.
+├── src/
+│   ├── assets/           # 静态资源
+│   ├── components/       # React 组件
+│   │   └── ui/           # ShadcnUI 组件
+│   ├── lib/              # 工具函数
+│   ├── App.tsx           # 主应用组件
+│   ├── main.tsx          # 入口文件
+│   └── index.css         # 全局样式
+├── components.json       # ShadcnUI 配置
+├── tailwind.config.js    # TailwindCSS 配置
+├── postcss.config.js     # PostCSS 配置
+├── vite.config.ts        # Vite 配置
+├── tsconfig.json         # TypeScript 配置
+└── package.json          # 依赖和脚本
+
+```
+HIGHLIGHTS: 
+/components.json/
+
+CONTENT:
+# 主要目录和文件概览
+
+项目的结构遵循现代前端应用的最佳实践，使得代码组织清晰、易于维护。
+
+## 核心目录
+
+- [src/](file:///Users/bondchen/abucode/templates/basic/react-template/src): 包含所有源代码
+  - [assets/](file:///Users/bondchen/abucode/templates/basic/react-template/src/assets): 静态资源文件，如图片、字体等
+  - [components/](file:///Users/bondchen/abucode/templates/basic/react-template/src/components): React 组件
+    - [ui/](file:///Users/bondchen/abucode/templates/basic/react-template/src/components/ui): ShadcnUI 预构建组件
+  - [lib/](file:///Users/bondchen/abucode/templates/basic/react-template/src/lib): 工具函数和辅助代码
+- [src/App.tsx](file:///Users/bondchen/abucode/templates/basic/react-template/src/App.tsx): 主应用组件
+- [src/main.tsx](file:///Users/bondchen/abucode/templates/basic/react-template/src/main.tsx): 应用入口文件
+- [src/index.css](file:///Users/bondchen/abucode/templates/basic/react-template/src/index.css): 全局样式文件
+
+## 配置文件
+
+- [components.json](file:///Users/bondchen/abucode/templates/basic/react-template/components.json): ShadcnUI 组件配置
+- [tailwind.config.js](file:///Users/bondchen/abucode/templates/basic/react-template/tailwind.config.js): TailwindCSS 配置文件
+- [postcss.config.js](file:///Users/bondchen/abucode/templates/basic/react-template/postcss.config.js): PostCSS 配置文件
+- [vite.config.ts](file:///Users/bondchen/abucode/templates/basic/react-template/vite.config.ts): Vite 构建工具配置
+- [tsconfig.json](file:///Users/bondchen/abucode/templates/basic/react-template/tsconfig.json): TypeScript 配置文件
+- [package.json](file:///Users/bondchen/abucode/templates/basic/react-template/package.json): 项目依赖和脚本配置
+--------------------
+STEP: 源代码目录详解
+FILE: src/App.tsx
+LANGUAGE: typescript
+CODE:
+```
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { 
+  HomeIcon, 
+  SettingsIcon, 
+  BarChartIcon, 
+  UsersIcon,
+  SunIcon,
+  MoonIcon
+} from "lucide-react";
+import { useState, useEffect } from "react";
+
+function App() {
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  
+  // 检查系统主题偏好
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else if (systemPrefersDark) {
+      setTheme('dark');
+    }
+  }, []);
+  
+  // 应用主题到DOM
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+  
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+}
+```
+HIGHLIGHTS: 
+/import { Button } from "@\/components\/ui\/button";/
+/import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@\/components\/ui\/card";/
+/const \[theme, setTheme\] = useState<'light' \| 'dark'>\('light'\);/
+
+CONTENT:
+# 源代码目录详解
+
+[src/](file:///Users/bondchen/abucode/templates/basic/react-template/src) 目录包含了项目的所有源代码。
+
+## 核心文件
+
+[src/App.tsx](file:///Users/bondchen/abucode/templates/basic/react-template/src/App.tsx) 是主应用组件，它展示了应用的主要界面。从代码中可以看到：
+
+1. 导入了多个 ShadcnUI 组件，如 Button、Card、Input、Tabs 等
+2. 使用 lucide-react 图标库提供的图标组件
+3. 实现了主题切换功能（light/dark 模式）
+4. 使用 React Hooks 管理状态和副作用
+
+[src/main.tsx](file:///Users/bondchen/abucode/templates/basic/react-template/src/main.tsx) 是应用入口文件，负责渲染根组件到 DOM。
+
+[src/index.css](file:///Users/bondchen/abucode/templates/basic/react-template/src/index.css) 包含全局样式和主题变量定义。
+
+## 组件目录
+
+[components/](file:///Users/bondchen/abucode/templates/basic/react-template/src/components) 目录用于存放项目自定义组件。
+
+[components/ui/](file:///Users/bondchen/abucode/templates/basic/react-template/src/components/ui) 目录包含所有 ShadcnUI 预构建组件，这些组件可以按需添加和使用。
+
+## 工具函数
+
+[lib/](file:///Users/bondchen/abucode/templates/basic/react-template/src/lib) 目录用于存放工具函数和辅助代码，例如格式化函数、API 调用封装等。
+--------------------
+STEP: 配置文件详解
+FILE: tailwind.config.js
+LANGUAGE: javascript
+CODE:
+```
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: ["class"],
+  content: [
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+  ],
+  prefix: "",
+  theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
+    },
+  },
+  plugins: [require("tailwindcss-animate")],
+}
+```
+HIGHLIGHTS: 
+/darkMode: \["class"\],/
+
+CONTENT:
+# 配置文件详解
+
+项目的配置文件决定了构建工具、样式系统和开发环境的行为。
+
+## 样式配置
+
+[tailwind.config.js](file:///Users/bondchen/abucode/templates/basic/react-template/tailwind.config.js) 是 TailwindCSS 的配置文件：
+
+1. `darkMode: ["class"]` 启用基于 CSS 类的暗色主题支持
+2. `content` 数组指定了需要扫描的文件，Tailwind 将从这些文件中提取使用的类名
+3. `theme` 对象扩展了默认主题，定义了颜色、间距、动画等
+4. `plugins` 数组包含了使用的插件，如 tailwindcss-animate
+
+[postcss.config.js](file:///Users/bondchen/abucode/templates/basic/react-template/postcss.config.js) 配置了 PostCSS 插件，主要用于处理 TailwindCSS。
+
+## 构建配置
+
+[vite.config.ts](file:///Users/bondchen/abucode/templates/basic/react-template/vite.config.ts) 配置了 Vite 构建工具，包括路径别名、插件等。
+
+[tsconfig.json](file:///Users/bondchen/abucode/templates/basic/react-template/tsconfig.json) 配置了 TypeScript 编译选项。
+
+## 组件配置
+
+[components.json](file:///Users/bondchen/abucode/templates/basic/react-template/components.json) 是 ShadcnUI 的配置文件，定义了组件的安装路径和样式配置。
+----------------------------------------
+TITLE: 目标用户和功能范围
+DESCRIPTION: 基于用户中心设计模型，学习如何定义新应用的目标用户和功能范围
+DIFFICULTY: intermediate
+ESTIMATED_TIME: 20
+PREREQUISITES: 项目结构介绍
+TAGS: user-centered-design, scope, requirements, planning
+
+PROJECT_FILES:
+src/
+src/components/
+src/components/ui/
+src/lib/utils.ts
+package.json
+README.md
+
+STEPS:
+STEP: 确定目标用户群体
+FILE: README.md
+LANGUAGE: markdown
+CODE:
+```
+# React + TailwindCSS + ShadcnUI + Vite 模板
+
+这是一个基础模板，可以在FunctionCat中进行设置、配置、扩展和部署。它包括：
+
+- React 18
+- TypeScript
+- TailwindCSS
+- ShadcnUI 组件
+- Vite 构建工具
+```
+HIGHLIGHTS: 
+/这是一个基础模板，可以在FunctionCat中进行设置、配置、扩展和部署。/
+
+CONTENT:
+# 确定目标用户群体
+
+在开始构建新应用之前，首先要明确目标用户群体。这将直接影响后续的功能设计和用户体验决策。
+
+## 用户画像分析
+
+基于模板的技术栈特点（React、TypeScript、TailwindCSS、ShadcnUI），我们可以推测目标用户可能包括：
+
+1. **前端开发人员**：熟悉现代前端技术栈，希望快速构建原型或完整应用
+2. **UI/UX 设计师**：需要与开发团队协作，关注界面美观和用户体验
+3. **初创团队**：资源有限但需要快速推出产品
+4. **个人开发者**：希望构建个人项目或作品集
+
+## 用户需求分析
+
+不同用户群体有不同的需求：
+
+- **开发人员**需要：高效的开发工具、清晰的代码结构、易于扩展的架构
+- **设计师**需要：灵活的样式系统、丰富的UI组件、一致的设计语言
+- **团队**需要：标准化的开发流程、良好的文档、易于协作的代码结构
+- **个人开发者**需要：低门槛入门、完整的功能示例、清晰的学习路径
+
+了解这些用户需求有助于我们确定应用的功能范围和优先级。
+--------------------
+STEP: 定义功能需求
 FILE: package.json
 LANGUAGE: json
 CODE:
-```json
+```
 {
   "name": "react-tailwind-shadcn-template",
   "private": true,
@@ -280,181 +594,57 @@ CODE:
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.43",
-    "@types/react-dom": "^18.2.17",
-    "@typescript-eslint/eslint-plugin": "^6.14.0",
-    "@typescript-eslint/parser": "^6.14.0",
-    "@vitejs/plugin-react": "^4.2.1",
-    "autoprefixer": "^10.4.16",
-    "eslint": "^8.55.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.5",
-    "postcss": "^8.4.32",
-    "tailwindcss": "^3.4.0",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.8"
   }
 }
 ```
-HIGHLIGHTS: 1-30
+HIGHLIGHTS: 
+/"dev": "vite"/
+/"build": "tsc && vite build"/
 
 CONTENT:
-## 项目结构概览
+# 定义功能需求
 
-让我们先了解一下项目的整体结构和各个目录的作用：
+功能需求描述了应用应该具备的具体功能和特性。基于用户需求分析，我们可以定义以下功能需求：
 
-```
-.
-├── src/
-│   ├── assets/           # 静态资源文件
-│   ├── components/       # 组件目录
-│   │   └── ui/           # ShadcnUI 组件
-│   ├── lib/              # 工具函数和库
-│   ├── App.tsx           # 主应用组件
-│   ├── main.tsx          # 应用入口文件
-│   └── index.css         # 全局样式文件
-├── components.json       # ShadcnUI 配置文件
-├── tailwind.config.js    # TailwindCSS 配置文件
-├── postcss.config.js     # PostCSS 配置文件
-├── vite.config.ts        # Vite 配置文件
-├── package.json          # 项目依赖和脚本配置
-└── index.html            # HTML 模板文件
-```
+## 核心功能需求
 
-### 各目录和文件的作用：
+1. **响应式设计**：应用在各种设备上都能良好显示
+   - 移动端适配
+   - 平板适配
+   - 桌面端优化
 
-1. **src/assets/** - 存放图片、字体等静态资源
-2. **src/components/** - 存放项目组件，其中 ui 子目录专门存放 ShadcnUI 组件
-3. **src/lib/** - 存放工具函数、自定义 hooks 等可复用代码
-4. **src/App.tsx** - 主应用组件
-5. **src/main.tsx** - 应用入口文件，渲染根组件
-6. **src/index.css** - 全局样式文件，包含 TailwindCSS 指令
-7. **components.json** - ShadcnUI 配置文件
-8. **tailwind.config.js** - TailwindCSS 配置文件
-9. **vite.config.ts** - Vite 构建工具配置文件
+2. **主题支持**：支持 Light 和 Dark 模式
+   - 系统主题自动检测
+   - 用户主题偏好保存
+   - 平滑的主题切换动画
+
+3. **组件系统**：丰富的 UI 组件库
+   - 按需加载组件
+   - 一致的设计语言
+   - 易于定制的样式
+
+4. **开发体验**：高效的开发工具链
+   - 快速热重载
+   - TypeScript 类型检查
+   - 代码规范检查
+
+## 扩展功能需求
+
+1. **路由管理**：支持多页面应用
+2. **状态管理**：复杂应用的状态管理方案
+3. **国际化**：多语言支持
+4. **性能优化**：代码分割、懒加载等
+5. **可访问性**：符合 WCAG 标准的无障碍设计
+
+这些功能需求将指导我们后续的开发工作，确保应用满足用户期望。
 --------------------
-STEP: 集成 ShadcnUI 组件库
-
-FILE: components.json
-LANGUAGE: json
-CODE:
-```json
-{
-  "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "default",
-  "rsc": false,
-  "tsx": true,
-  "tailwind": {
-    "config": "tailwind.config.js",
-    "css": "src/index.css",
-    "baseColor": "slate",
-    "cssVariables": true,
-    "prefix": ""
-  },
-  "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils"
-  }
-}
-```
-HIGHLIGHTS: 1-15
-
-CONTENT:
-## 集成 ShadcnUI 组件库
-
-ShadcnUI 是一个基于 TailwindCSS 构建的组件库，提供了可复制粘贴的组件代码，可以根据需要自定义。
-
-### 1. 安装 ShadcnUI
-
-运行以下命令初始化 ShadcnUI：
-
-```bash
-npx shadcn-ui@latest init
-```
-
-在初始化过程中，会询问一些配置选项：
-- Would you like to use TypeScript? › yes
-- Which style would you like to use? › default
-- Which color would you like to use as base color? › slate
-- Where is your global CSS file? › src/index.css
-- Do you want to use CSS variables for colors? › yes
-- Where is your tailwind.config.js located? › tailwind.config.js
-- Configure the import alias for components? › @/components
-- Configure the import alias for utils? › @/lib/utils
-- Are you using React Server Components? › no
-
-### 2. 配置路径别名
-
-为了让 TypeScript 能够正确解析路径别名，需要配置 vite.config.ts：
-
-```typescript
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import path from "path";
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
-});
-```
-
-同时更新 tsconfig.json：
-
-```json
-{
-  "compilerOptions": {
-    // ... 其他配置
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  // ... 其他配置
-}
-```
-
-### 3. 安装一个示例组件
-
-让我们安装一个按钮组件来测试配置：
-
-```bash
-npx shadcn-ui@latest add button
-```
-
-安装完成后，可以在组件中使用：
-
-```tsx
-import { Button } from "@/components/ui/button"
-
-function App() {
-  return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold text-purple-600 mb-4">
-          Hello, ShadcnUI!
-        </h1>
-        <Button>Click me</Button>
-      </div>
-    </div>
-  )
-}
-```
---------------------
-STEP: 理解 ShadcnUI 组件工作机制
-
+STEP: 定义内容需求
 FILE: src/components/ui/button.tsx
 LANGUAGE: typescript
 CODE:
-```typescript
+```
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
@@ -512,174 +702,403 @@ Button.displayName = "Button"
 
 export { Button, buttonVariants }
 ```
-HIGHLIGHTS: 1-50
+HIGHLIGHTS: 
+/const buttonVariants = cva\(/
+/export { Button, buttonVariants }/
 
 CONTENT:
-## 理解 ShadcnUI 组件工作机制
+# 定义内容需求
 
-ShadcnUI 组件是完全可自定义的，让我们通过 Button 组件来理解其工作机制。
+内容需求关注应用中需要展示的信息类型和质量标准。对于基于此模板的新应用，我们需要考虑以下内容需求：
 
-### 1. 组件构成
+## 内容类型
 
-ShadcnUI 组件主要由以下几部分构成：
+1. **文本内容**：
+   - 清晰的界面说明文字
+   - 错误提示和帮助信息
+   - 用户引导内容
 
-1. **class-variance-authority (cva)** - 用于定义组件的样式变体
-2. **@radix-ui/react-slot** - 用于处理 asChild 属性
-3. **cn 辅助函数** - 用于合并 TailwindCSS 类名
-4. **React.forwardRef** - 用于转发 ref
+2. **视觉元素**：
+   - 图标和插图
+   - 照片和插图
+   - 数据可视化图表
 
-### 2. 样式变体
+3. **交互元素**：
+   - 表单和输入控件
+   - 按钮和操作项
+   - 导航和菜单
 
-Button 组件使用 cva 定义了多种变体：
+## 内容质量要求
 
-- variant: default, destructive, outline, secondary, ghost, link
-- size: default, sm, lg, icon
+1. **一致性**：所有内容遵循统一的风格指南
+2. **可访问性**：内容对所有用户都可访问，包括残障人士
+3. **响应式**：内容在不同设备上都能良好展示
+4. **本地化**：支持多语言内容显示
+5. **时效性**：内容保持更新，特别是动态数据
 
-使用示例：
+## 内容管理策略
 
-```tsx
-<Button variant="outline" size="lg">
-  Large Outline Button
-</Button>
-```
+1. **静态内容**：直接写入代码或配置文件
+2. **动态内容**：通过API获取或用户生成
+3. **缓存策略**：优化内容加载性能
+4. **版本控制**：跟踪内容变更历史
 
-### 3. asChild 属性
-
-asChild 属性允许将组件的样式应用到其子组件上：
-
-```tsx
-<Button asChild>
-  <Link to="/dashboard">Dashboard</Link>
-</Button>
-```
-
-### 4. cn 辅助函数
-
-cn 函数用于合并类名，处理条件类名：
-
-```typescript
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
-```
-
-这种设计使组件既灵活又易于自定义。
+通过明确定义内容需求，我们可以确保应用不仅功能完善，而且内容丰富、质量高，能够为用户提供有价值的信息。
 ----------------------------------------
-TITLE: 3-自定义主题和扩展功能
-DESCRIPTION: 学习如何自定义 TailwindCSS 主题，扩展 ShadcnUI 组件，以及添加新功能
+TITLE: 导航和功能结构
+DESCRIPTION: 基于用户中心设计模型，学习如何设计应用的导航结构和功能组织
 DIFFICULTY: intermediate
-ESTIMATED_TIME: 40
-PREREQUISITES: 完成前两节课的所有内容
-TAGS: tailwindcss, 主题定制, shadcnui, 扩展功能
+ESTIMATED_TIME: 25
+PREREQUISITES: 目标用户和功能范围
+TAGS: navigation, structure, user-flow, information-architecture
 
 PROJECT_FILES:
-tailwind.config.js
-src/index.css
-src/lib/utils.ts
+src/
+src/App.tsx
+src/components/
 src/components/ui/
+src/lib/utils.ts
+package.json
+
+STEPS:
+STEP: 设计信息架构
+FILE: src/App.tsx
+LANGUAGE: typescript
+CODE:
+```
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { 
+  HomeIcon, 
+  SettingsIcon, 
+  BarChartIcon, 
+  UsersIcon,
+  SunIcon,
+  MoonIcon
+} from "lucide-react";
+import { useState, useEffect } from "react";
+
+function App() {
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  
+  // 检查系统主题偏好
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else if (systemPrefersDark) {
+      setTheme('dark');
+    }
+  }, []);
+  
+  // 应用主题到DOM
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+  
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+}
+```
+HIGHLIGHTS: 
+/import { Button } from "@\/components\/ui\/button";/
+/const \[theme, setTheme\] = useState<'light' \| 'dark'>\('light'\);/
+
+CONTENT:
+# 设计信息架构
+
+信息架构（Information Architecture）是结构层的核心部分，它决定了内容如何组织和用户如何找到所需信息。
+
+## 分析现有结构
+
+在 [src/App.tsx](file:///Users/bondchen/abucode/templates/basic/react-template/src/App.tsx) 中，我们可以看到当前的信息架构包括：
+
+1. **主导航**：
+   - 首页
+   - 文档
+   - 组件
+   - 关于
+
+2. **用户操作**：
+   - 主题切换
+   - 登录/注册
+
+3. **功能区域**：
+   - 特性展示区
+   - 入门指南（使用 Tabs 组件）
+
+## 设计原则
+
+设计信息架构时应遵循以下原则：
+
+1. **用户中心**：以用户需求和行为模式为基础组织信息
+2. **一致性**：在整个应用中保持导航模式的一致
+3. **可扩展性**：为未来功能预留空间
+4. **简洁性**：避免过多层级和复杂结构
+
+## 信息组织方法
+
+1. **层级结构**：通过父子关系组织内容
+2. **分组分类**：将相关功能分组
+3. **标签系统**：使用标签对内容进行多维度分类
+4. **搜索功能**：提供搜索入口帮助用户快速找到内容
+
+对于新应用，建议根据功能相关性组织导航项，确保用户能直观地找到所需功能。
+--------------------
+STEP: 设计交互流程
+FILE: src/components/ui/tabs.tsx
+LANGUAGE: typescript
+CODE:
+```
+import * as React from "react"
+import * as TabsPrimitive from "@radix-ui/react-tabs"
+
+import { cn } from "@/lib/utils"
+
+const Tabs = TabsPrimitive.Root
+
+const TabsList = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.List>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.List
+    ref={ref}
+    className={cn(
+      "inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
+      className
+    )}
+    {...props}
+  />
+))
+TabsList.displayName = TabsPrimitive.List.displayName
+
+const TabsTrigger = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Trigger
+    ref={ref}
+    className={cn(
+      "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm",
+      className
+    )}
+    {...props}
+  />
+))
+TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
+
+const TabsContent = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Content
+    ref={ref}
+    className={cn(
+      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      className
+    )}
+    {...props}
+  />
+))
+TabsContent.displayName = TabsPrimitive.Content.displayName
+
+export { Tabs, TabsList, TabsTrigger, TabsContent }
+```
+HIGHLIGHTS: 
+/const Tabs = TabsPrimitive\.Root/
+
+CONTENT:
+# 设计交互流程
+
+交互设计关注用户如何与应用进行交互，以及应用如何响应用户的操作。
+
+## 分析现有交互
+
+模板中使用了多种交互模式：
+
+1. **Tab 导航**：在入门指南部分使用 Tabs 组件，用户可以在不同内容间切换
+2. **主题切换**：通过按钮切换 Light/Dark 模式
+3. **表单交互**：输入框和按钮的组合
+
+## 交互设计原则
+
+1. **可见性**：确保用户能清楚地看到可交互的元素
+2. **反馈**：为用户操作提供即时反馈
+3. **一致性**：保持交互模式在整个应用中的一致性
+4. **简洁性**：避免不必要的复杂交互
+
+## 常见交互模式
+
+1. **导航交互**：
+   - 主导航菜单
+   - 面包屑导航
+   - 分页导航
+
+2. **表单交互**：
+   - 输入验证
+   - 实时反馈
+   - 提交处理
+
+3. **内容交互**：
+   - 展开/收起
+   - 模态框
+   - 下拉菜单
+
+在设计新应用时，应根据功能需求选择合适的交互模式，并确保它们符合用户预期。
+--------------------
+STEP: 规划功能结构
+FILE: package.json
+LANGUAGE: json
+CODE:
+```
+{
+  "name": "react-tailwind-shadcn-template",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "@radix-ui/react-accordion": "^1.2.12",
+    "@radix-ui/react-alert-dialog": "^1.1.15",
+    "@radix-ui/react-aspect-ratio": "^1.1.7",
+    "@radix-ui/react-avatar": "^1.1.10",
+    "@radix-ui/react-checkbox": "^1.3.3",
+    "@radix-ui/react-collapsible": "^1.1.12",
+    "@radix-ui/react-context-menu": "^2.2.16",
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-hover-card": "^1.1.15",
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-menubar": "^1.1.16",
+    "@radix-ui/react-navigation-menu": "^1.2.14",
+    "@radix-ui/react-popover": "^1.1.15",
+    "@radix-ui/react-progress": "^1.1.7",
+    "@radix-ui/react-radio-group": "^1.3.8",
+    "@radix-ui/react-scroll-area": "^1.2.10",
+    "@radix-ui/react-select": "^2.2.6",
+    "@radix-ui/react-separator": "^1.1.7",
+    "@radix-ui/react-slider": "^1.3.6",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-switch": "^1.2.6",
+    "@radix-ui/react-tabs": "^1.1.13",
+    "@radix-ui/react-toggle": "^1.1.10",
+    "@radix-ui/react-toggle-group": "^1.1.11",
+    "@radix-ui/react-tooltip": "^1.2.8",
+    "class-variance-authority": "^0.7.1",
+    "cmdk": "^1.1.1",
+    "date-fns": "^4.1.0",
+    "embla-carousel-react": "^8.6.0",
+    "input-otp": "^1.4.2",
+    "lucide-react": "^0.544.0",
+    "next-themes": "^0.4.6",
+    "react": "^18.2.0",
+    "react-day-picker": "^9.9.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.62.0",
+    "react-resizable-panels": "^3.0.6",
+    "recharts": "^2.15.4",
+    "sonner": "^2.0.7",
+    "vaul": "^1.1.2",
+    "zod": "^4.1.8"
+  },
+  "devDependencies": {
+  }
+}
+```
+HIGHLIGHTS: 
+/"@radix-ui\/react-navigation-menu": "\^1\.2\.14"/
+/"@radix-ui\/react-tabs": "\^1\.1\.13"/
+
+CONTENT:
+# 规划功能结构
+
+功能结构定义了应用中各个功能模块的组织方式和相互关系。
+
+## 利用现有组件
+
+模板提供了丰富的 UI 组件，可以用于构建功能结构：
+
+1. **导航菜单**：使用 `@radix-ui/react-navigation-menu` 构建主导航
+2. **选项卡**：使用 `@radix-ui/react-tabs` 组织相关内容
+3. **对话框**：使用 `@radix-ui/react-dialog` 展示详细信息或表单
+4. **下拉菜单**：使用 `@radix-ui/react-dropdown-menu` 提供额外选项
+
+## 功能模块规划
+
+根据前一课确定的功能需求，可以规划以下功能模块：
+
+1. **核心功能模块**：
+   - 用户认证（登录/注册）
+   - 主界面/仪表板
+   - 核心业务功能
+
+2. **辅助功能模块**：
+   - 设置/配置
+   - 帮助/文档
+   - 用户反馈
+
+3. **管理功能模块**（如适用）：
+   - 内容管理
+   - 用户管理
+   - 系统监控
+
+## 路由结构设计
+
+对于多页面应用，需要设计合理的路由结构：
+
+```
+/              # 首页/仪表板
+/login         # 登录页
+/register      # 注册页
+/settings      # 设置页
+/help          # 帮助文档
+/profile       # 用户资料
+/features      # 功能展示
+```
+
+每个路由应对应一个清晰的功能，避免功能重叠或混淆。路由设计应与导航结构保持一致，确保用户能轻松在不同功能间切换。
+----------------------------------------
+TITLE: UI效果设计
+DESCRIPTION: 基于用户中心设计模型，学习如何创建吸引人的用户界面效果
+DIFFICULTY: intermediate
+ESTIMATED_TIME: 25
+PREREQUISITES: 导航和功能结构
+TAGS: ui-design, visual-design, tailwindcss, shadcnui, aesthetics
+
+PROJECT_FILES:
+src/
+src/App.tsx
+src/index.css
+src/components/
+src/components/ui/
+src/lib/utils.ts
+tailwind.config.js
 components.json
 
 STEPS:
-
-STEP: 自定义 TailwindCSS 主题
-
-FILE: tailwind.config.js
-LANGUAGE: javascript
+STEP: 设计视觉层次
+FILE: src/index.css
+LANGUAGE: css
 CODE:
-```javascript
-/** @type {import('tailwindcss').Config} */
-export default {
-  darkMode: ["class"],
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-  ],
-  prefix: "",
-  theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
-    extend: {
-      colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-      },
-    },
-  },
-  plugins: [require("tailwindcss-animate")],
-}
 ```
-HIGHLIGHTS: 1-30
-
-CONTENT:
-## 自定义 TailwindCSS 主题
-
-TailwindCSS 允许我们通过配置文件自定义主题，包括颜色、间距、字体等。
-
-### 1. 配置 CSS 变量
-
-首先，在 src/index.css 中添加 CSS 变量来定义颜色：
-
-```css
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -758,156 +1177,69 @@ TailwindCSS 允许我们通过配置文件自定义主题，包括颜色、间�
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 ```
+HIGHLIGHTS: 
 
-### 2. 扩展主题配置
+/--primary: 222\.2 47\.4% 11\.2%;/
 
-在 tailwind.config.js 中扩展主题：
+CONTENT:
+# 设计视觉层次
 
-```javascript
-/** @type {import('tailwindcss').Config} */
-export default {
-  darkMode: ["class"],
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-  ],
-  theme: {
-    extend: {
-      colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        // ... 其他颜色配置
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
-      // ... 其他扩展配置
-    },
-  },
-  plugins: [require("tailwindcss-animate")],
-}
-```
+视觉层次是表现层的核心，它决定了用户界面的外观和感觉。通过合理运用颜色、字体、间距等元素，可以引导用户的注意力并提升用户体验。
 
-这样就实现了可自定义的主题系统，支持亮色和暗色模式。
+## 颜色系统
+
+模板提供了完整的颜色系统，包括：
+
+1. **基础颜色**：
+   - `--background` 和 `--foreground`：页面背景和前景色
+   - `--primary` 和 `--primary-foreground`：主要操作颜色
+   - `--secondary` 和 `--secondary-foreground`：次要操作颜色
+   - `--muted` 和 `--muted-foreground`：弱化内容颜色
+
+2. **功能颜色**：
+   - `--destructive`：危险操作颜色（如删除）
+   - `--success`：成功状态颜色
+   - `--warning`：警告状态颜色
+
+3. **组件颜色**：
+   - `--card`：卡片组件背景色
+   - `--popover`：弹出框背景色
+   - `--border`：边框颜色
+   - `--input`：输入框颜色
+
+## 字体和排版
+
+良好的排版能显著提升界面的可读性和美观度：
+
+1. **字体选择**：选择易读且符合品牌调性的字体
+2. **字号层次**：建立清晰的标题、副标题、正文层次
+3. **行高和间距**：确保文字有足够的呼吸空间
+4. **字重对比**：通过字重区分内容重要性
+
+## 视觉层次原则
+
+1. **对比原则**：通过颜色、大小、形状等创造对比
+2. **重复原则**：重复使用相同的设计元素建立一致性
+3. **对齐原则**：保持元素的对齐以创造秩序感
+4. **亲密性原则**：相关元素靠近，无关元素分离
+
+合理运用这些原则可以创建出既美观又易用的用户界面。
 --------------------
-STEP: 扩展 ShadcnUI 组件
-
-FILE: src/components/ui/card.tsx
+STEP: 创建交互反馈效果
+FILE: src/components/ui/button.tsx
 LANGUAGE: typescript
 CODE:
-```typescript
+```
 import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-const Card = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm",
-      className
-    )}
-    {...props}
-  />
-))
-Card.displayName = "Card"
-
-const CardHeader = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
-    {...props}
-  />
-))
-CardHeader.displayName = "CardHeader"
-
-const CardTitle = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <h3
-    ref={ref}
-    className={cn(
-      "text-2xl font-semibold leading-none tracking-tight",
-      className
-    )}
-    {...props}
-  />
-))
-CardTitle.displayName = "CardTitle"
-
-const CardDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <p
-    ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
-    {...props}
-  />
-))
-CardDescription.displayName = "CardDescription"
-
-const CardContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
-))
-CardContent.displayName = "CardContent"
-
-const CardFooter = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex items-center p-6 pt-0", className)}
-    {...props}
-  />
-))
-CardFooter.displayName = "CardFooter"
-
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
-```
-HIGHLIGHTS: 1-60
-
-CONTENT:
-## 扩展 ShadcnUI 组件
-
-ShadcnUI 最大的优势之一是其组件是可复制粘贴的，这意味着我们可以轻松地扩展和自定义它们。
-
-### 1. 添加新的 ShadcnUI 组件
-
-让我们添加一个卡片(Card)组件：
-
-```bash
-npx shadcn-ui@latest add card
-```
-
-这将下载并添加 Card 组件到 src/components/ui/ 目录中。
-
-### 2. 自定义现有组件
-
-我们可以通过修改组件代码来自定义其行为和样式。例如，让我们修改 Button 组件，添加一个新的变体：
-
-```typescript
 const buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
@@ -922,8 +1254,6 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        // 添加一个新的变体
-        gradient: "bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:opacity-90"
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -938,1899 +1268,209 @@ const buttonVariants = cva(
     },
   }
 )
-```
 
-现在可以使用新的变体：
-
-import { Link, useLocation } from "react-router-dom";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { appNavigationConfig } from "@/components/navigation/app-nav-config";
-
-interface AppSidebarNavProps extends React.HTMLAttributes<HTMLElement> {
-  items: {
-    href?: string;
-    title: string;
-    disabled?: boolean;
-  }[];
-}
-
-export function AppSidebarNav({ className, items, ...props }: AppSidebarNavProps) {
-  const location = useLocation();
-
-  return (
-    <ScrollArea className="h-full py-4">
-      <nav
-        className={cn(
-          "flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1",
-          className
-        )}
-        {...props}
-      >
-        {appNavigationConfig.map((group) => (
-          <div key={group.title} className="pb-4">
-            <h4 className="mb-1 rounded-md px-2 py-1 text-sm font-semibold">
-              {group.title}
-            </h4>
-            <div className="grid grid-cols-1 gap-1">
-              {group.items.map((item) => (
-                <Link
-                  key={item.href}
-                  to={item.href || "#"}
-                  className={cn(
-                    buttonVariants({ variant: "ghost" }),
-                    item.disabled && "cursor-not-allowed opacity-60",
-                    location.pathname === item.href
-                      ? "bg-muted hover:bg-muted"
-                      : "hover:bg-transparent hover:underline",
-                    "justify-start"
-                  )}
-                >
-                  {item.icon && <span className="mr-2">{item.icon}</span>}
-                  {item.title}
-                </Link>
-              ))}
-            </div>
-          </div>
-        ))}
-      </nav>
-    </ScrollArea>
-  );
-}
-export interface AppNavItem {
-  title: string;
-  href?: string;
-  disabled?: boolean;
-  external?: boolean;
-  icon?: React.ReactNode;
-  label?: string;
-}
-
-export interface AppNavGroup {
-  title: string;
-  items: AppNavItem[];
-}
-
-// 基于企业管理系统的导航示例
-export const appNavigationConfig: AppNavGroup[] = [
-  {
-    title: "概览",
-    items: [
-      {
-        title: "仪表板",
-        href: "/dashboard",
-        icon: "DashboardIcon",
-      },
-    ],
-  },
-  {
-    title: "业务管理",
-    items: [
-      {
-        title: "客户管理",
-        href: "/customers",
-        icon: "UsersIcon",
-      },
-      {
-        title: "订单管理",
-        href: "/orders",
-        icon: "ShoppingCartIcon",
-      },
-      {
-        title: "产品管理",
-        href: "/products",
-        icon: "PackageIcon",
-      },
-    ],
-  },
-  {
-    title: "数据分析",
-    items: [
-      {
-        title: "销售报表",
-        href: "/reports/sales",
-        icon: "BarChartIcon",
-      },
-      {
-        title: "用户分析",
-        href: "/reports/users",
-        icon: "ActivityIcon",
-      },
-    ],
-  },
-  {
-    title: "系统管理",
-    items: [
-      {
-        title: "用户管理",
-        href: "/admin/users",
-        icon: "UserIcon",
-      },
-      {
-        title: "角色权限",
-        href: "/admin/roles",
-        icon: "LockIcon",
-      },
-      {
-        title: "系统设置",
-        href: "/admin/settings",
-        icon: "SettingsIcon",
-      },
-    ],
-  },
-];
-# 新应用的用户需求分析
-
-## 目标用户画像
-
-### 1. 企业管理者
-- 角色特征：需要查看业务数据和关键指标
-- 使用场景：日常业务监控、决策支持
-- 需求：数据可视化、报表功能、权限管理
-
-### 2. 操作员/员工
-- 角色特征：执行具体业务操作
-- 使用场景：数据录入、任务处理、信息查询
-- 需求：操作简便、流程清晰、响应快速
-
-### 3. 客户/外部用户
-- 角色特征：使用应用的部分功能
-- 使用场景：查看信息、提交请求、自助服务
-- 需求：界面友好、功能明确、易于理解
-
-## 功能需求分析
-
-### 核心功能模块
-1. 仪表板/首页 - 提供关键指标概览
-2. 数据管理 - 数据的增删改查操作
-3. 报表统计 - 数据分析和可视化展示
-4. 用户管理 - 用户权限和角色管理
-5. 系统设置 - 应用配置和参数调整
-
-### 扩展功能模块
-1. 通知提醒 - 消息推送和提醒功能
-2. 工作流程 - 业务流程自动化
-3. 集成接口 - 第三方系统集成
-4. 移动端适配 - 响应式设计和移动体验
-```tsx
-<Button variant="gradient">Gradient Button</Button>
-```
-
-### 3. 创建自定义组件
-
-我们也可以基于现有组件创建完全自定义的组件。例如，创建一个带有图标的按钮：
-
-```tsx
-import { Button, buttonVariants } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
-import { Slot } from "@radix-ui/react-slot"
-import * as React from "react"
-
-interface IconButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  icon: React.ReactNode
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
   asChild?: boolean
 }
 
-const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ icon, asChild = false, className, children, ...props }, ref) => {
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(
-          buttonVariants({ variant: "ghost", size: "icon" }),
-          className
-        )}
+        className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-      >
-        {icon}
-        {children}
-      </Comp>
+      />
     )
   }
 )
-IconButton.displayName = "IconButton"
+Button.displayName = "Button"
 
-export { IconButton }
+export { Button, buttonVariants }
 ```
+HIGHLIGHTS: 
+/"inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors/
+/hover:bg-primary\/90/
+/disabled:pointer-events-none disabled:opacity-50/
 
-这种扩展方式使我们能够根据项目需求灵活地定制组件。
+CONTENT:
+# 创建交互反馈效果
+
+交互反馈是提升用户体验的重要手段，它让用户知道他们的操作已被系统接收并正在处理。
+
+## 按钮状态反馈
+
+在 [Button](file:///Users/bondchen/abucode/templates/basic/react-template/src/components/ui/button.tsx#L57-L67) 组件中，我们可以看到多种状态反馈：
+
+1. **默认状态**：按钮的正常显示状态
+2. **悬停状态**：`hover:` 前缀定义了鼠标悬停时的样式变化
+3. **焦点状态**：`focus-visible:` 前缀定义了获得焦点时的样式
+4. **禁用状态**：`disabled:` 前缀定义了禁用时的样式
+
+这些状态反馈让用户清楚地知道按钮的当前状态和可进行的操作。
+
+## 动画和过渡
+
+模板使用了多种动画和过渡效果：
+
+1. **颜色过渡**：`transition-colors` 实现颜色变化的平滑过渡
+2. **关键帧动画**：在 [tailwind.config.js](file:///Users/bondchen/abucode/templates/basic/react-template/tailwind.config.js) 中定义的自定义动画
+3. **组件动画**：如手风琴、模态框等组件的展开收起动画
+
+## 视觉反馈类型
+
+1. **即时反馈**：按钮点击、表单验证等立即响应
+2. **状态反馈**：加载状态、成功/失败状态等
+3. **进度反馈**：进度条、加载指示器等
+4. **引导反馈**：工具提示、引导步骤等
+
+良好的视觉反馈应该：
+- 及时且准确
+- 与用户操作相关
+- 不干扰主要任务
+- 符合用户预期
 --------------------
-STEP: 添加动画和交互功能
-
-FILE: src/lib/utils.ts
-LANGUAGE: typescript
+STEP: 实现响应式设计
+FILE: tailwind.config.js
+LANGUAGE: javascript
 CODE:
-```typescript
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
-import { cubicOut } from "framer-motion"
-import { type Transition } from "framer-motion"
-
-export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs))
-}
-
-type FlyAndScaleProps = {
-    y: number
-    x: number
-    start: number
-    end: number
-}
-
-export const flyAndScale = (
-    _: HTMLElement,
-    options: FlyAndScaleProps = {
-        y: -8,
-        x: 0,
-        start: 0.95,
-        end: 1,
-    },
-): Transition => {
-    return {
-        duration: 0.2,
-        ease: [0.215, 0.61, 0.355, 1],
-        ...options,
-    }
-}
 ```
-HIGHLIGHTS: 1-20
-
-CONTENT:
-## 添加动画和交互功能
-
-为了提升用户体验，我们可以添加动画和交互功能到我们的应用中。
-
-### 1. 安装动画库
-
-首先安装 framer-motion 动画库：
-
-```bash
-pnpm add framer-motion
-pnpm add -D @types/framer-motion
-```
-
-### 2. 创建动画工具函数
-
-在 src/lib/utils.ts 中添加动画相关的工具函数：
-
-```typescript
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
-import { cubicOut } from "framer-motion"
-import { type Transition } from "framer-motion"
-
-export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs))
-}
-
-type FlyAndScaleProps = {
-    y: number
-    x: number
-    start: number
-    end: number
-}
-
-export const flyAndScale = (
-    _: HTMLElement,
-    options: FlyAndScaleProps = {
-        y: -8,
-        x: 0,
-        start: 0.95,
-        end: 1,
-    },
-): Transition => {
-    return {
-        duration: 0.2,
-        ease: [0.215, 0.61, 0.355, 1],
-        ...options,
-    }
-}
-```
-
-### 3. 创建带动画的组件
-
-创建一个带动画效果的 Tooltip 组件：
-
-```tsx
-import { motion, AnimatePresence } from "framer-motion"
-import { cn } from "@/lib/utils"
-import { ReactNode, useState } from "react"
-
-interface TooltipProps {
-  children: ReactNode
-  content: ReactNode
-  side?: "top" | "right" | "bottom" | "left"
-}
-
-export function Tooltip({ children, content, side = "top" }: TooltipProps) {
-  const [isVisible, setIsVisible] = useState(false)
-
-  const sideClasses = {
-    top: "bottom-full left-1/2 transform -translate-x-1/2 mb-2",
-    right: "left-full top-1/2 transform -translate-y-1/2 ml-2",
-    bottom: "top-full left-1/2 transform -translate-x-1/2 mt-2",
-    left: "right-full top-1/2 transform -translate-y-1/2 mr-2",
-  }
-
-  const sideTransformOrigin = {
-    top: "bottom center",
-    right: "left center",
-    bottom: "top center",
-    left: "right center",
-  }
-
-  return (
-    <div 
-      className="inline-block relative"
-      onMouseEnter={() => setIsVisible(true)}
-      onMouseLeave={() => setIsVisible(false)}
-    >
-      {children}
-      <AnimatePresence>
-        {isVisible && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.2 }}
-            className={cn(
-              "absolute z-50 px-3 py-1.5 text-sm bg-popover text-popover-foreground rounded-md border shadow-md whitespace-nowrap",
-              sideClasses[side]
-            )}
-            style={{ originX: 0.5, originY: 0.5 }}
-          >
-            <div className="relative">
-              {content}
-              <div 
-                className="absolute w-2 h-2 bg-popover border border-border transform rotate-45"
-                style={{
-                  top: side === "bottom" ? "-4px" : side === "top" ? "calc(100% - 4px)" : "calc(50% - 4px)",
-                  left: side === "right" ? "-4px" : side === "left" ? "calc(100% - 4px)" : "calc(50% - 4px)",
-                }}
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
-}
-```
-
-### 4. 使用带动画的组件
-
-```tsx
-import { Tooltip } from "@/components/ui/tooltip"
-import { Button } from "@/components/ui/button"
-import { InfoIcon } from "lucide-react"
-
-function App() {
-  return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <Tooltip content="这是一个带有动画效果的提示信息" side="top">
-        <Button variant="outline" size="icon">
-          <InfoIcon className="h-4 w-4" />
-        </Button>
-      </Tooltip>
-    </div>
-  )
-}
-```
-
-通过这种方式，我们可以为应用添加流畅的动画效果，提升用户体验。
-----------------------------------------
-TITLE: 4-用户需求分析与导航设计
-DESCRIPTION: 学习如何根据目标用户需求设计导航结构，包括用户旅程分析和导航设计过程
-DIFFICULTY: intermediate
-ESTIMATED_TIME: 45
-PREREQUISITES: 完成前三节课的所有内容
-TAGS: 用户需求, 导航设计, 用户旅程, 信息架构
-
-PROJECT_FILES:
-src/
-src/app/
-src/components/
-src/components/layout/
-src/components/navigation/
-src/hooks/
-
-STEPS:
-
-STEP: 分析目标用户和功能需求
-
-FILE: src/app/user-research.md
-LANGUAGE: markdown
-CODE:
-```markdown
-# 用户需求分析
-
-## 目标用户画像
-
-### 1. 初级用户
-- 技术背景：刚接触前端开发的新手开发者
-- 需求：快速搭建项目、学习最佳实践
-- 痛点：不熟悉工具链、缺乏项目结构经验
-
-### 2. 中级用户
-- 技术背景：有一定前端开发经验的工程师
-- 需求：高效的开发流程、可扩展的架构
-- 痛点：项目维护困难、组件复用性差
-
-### 3. 高级用户
-- 技术背景：资深前端架构师
-- 需求：高度可定制、性能优化、团队协作
-- 痛点：技术债务、团队规范不统一
-
-## 功能需求分析
-
-### 核心功能
-1. 项目初始化和配置
-2. 组件库集成和使用
-3. 样式系统定制
-4. 路由管理
-5. 状态管理
-
-### 扩展功能
-1. 国际化支持
-2. 主题切换
-3. 权限控制
-4. 数据可视化
-5. 性能监控
-```
-HIGHLIGHTS: 1-40
-
-CONTENT:
-## 分析目标用户和功能需求
-
-在设计任何应用程序之前，了解目标用户和他们的需求是至关重要的。这将直接影响我们的导航设计和功能结构。
-
-### 1. 创建用户画像
-
-首先，我们需要定义目标用户群体。在我们的 React 模板项目中，主要有三类用户：
-
-1. **初级用户** - 刚接触前端开发的新手开发者
-   - 他们需要清晰的文档和示例
-   - 希望快速上手，避免复杂的配置
-   - 需要学习最佳实践
-
-2. **中级用户** - 有一定前端开发经验的工程师
-   - 关注开发效率和代码质量
-   - 需要可扩展和可维护的架构
-   - 希望有良好的组件复用性
-
-3. **高级用户** - 资深前端架构师
-   - 需要高度可定制的解决方案
-   - 关注性能优化和团队协作
-   - 需要解决技术债务问题
-
-### 2. 功能需求分析
-
-基于用户画像，我们可以分析出不同用户的功能需求：
-
-#### 核心功能需求：
-- 项目初始化和配置
-- 组件库集成和使用
-- 样式系统定制
-- 路由管理
-- 状态管理
-
-#### 扩展功能需求：
-- 国际化支持
-- 主题切换
-- 权限控制
-- 数据可视化
-- 性能监控
-
-### 3. 用户旅程映射
-
-了解用户在使用我们模板时的旅程可以帮助我们设计更好的导航：
-
-1. **发现阶段** - 用户寻找合适的模板
-2. **评估阶段** - 用户评估模板是否满足需求
-3. **入门阶段** - 用户开始使用模板构建项目
-4. **扩展阶段** - 用户根据项目需求扩展功能
-5. **维护阶段** - 用户维护和优化项目
-
-通过分析这些阶段，我们可以确定在每个阶段用户需要什么信息和功能，从而设计出符合用户期望的导航结构。
---------------------
-STEP: 设计导航结构和信息架构
-
-FILE: src/components/navigation/nav-config.ts
-LANGUAGE: typescript
-CODE:
-```typescript
-// 保留此文件但清空内容，因为我们不再需要它
-```
-HIGHLIGHTS: 1-70
-
-CONTENT:
-## 设计导航结构和信息架构
-
-基于用户需求分析，我们需要设计一个清晰、直观的导航结构，让用户能够轻松找到所需信息。
-
-### 1. 信息架构原则
-
-在设计导航结构时，我们需要遵循以下原则：
-
-1. **层次清晰** - 将相关内容组织在一起
-2. **逻辑性强** - 按照用户使用流程或功能相关性组织
-3. **易于理解** - 使用用户熟悉的术语
-4. **易于查找** - 重要功能应该容易找到
-
-### 2. 导航结构设计
-
-根据我们的用户需求分析，我们可以将导航分为以下几个主要部分：
-
-#### 入门部分
-- 快速开始指南
-- 项目结构说明
-- 开发环境配置
-
-#### 核心功能部分
-- 组件库使用
-- 样式系统定制
-- 路由管理
-- 状态管理
-
-#### 扩展功能部分
-- 国际化支持
-- 主题切换
-- 权限控制
-
-#### 部署部分
-- 构建优化
-- 部署指南
-
-### 3. 导航设计实现
-
-我们可以创建一个配置文件来管理导航项：
-
-```typescript
-export interface NavItem {
-  title: string;
-  href?: string;
-  disabled?: boolean;
-  external?: boolean;
-  icon?: React.ReactNode;
-  label?: string;
-}
-
-export interface NavGroup {
-  title: string;
-  items: NavItem[];
-}
-
-export const navigationConfig: NavGroup[] = [
-  {
-    title: "入门",
-    items: [
-      {
-        title: "快速开始",
-        href: "/docs/getting-started",
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: ["class"],
+  content: [
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+  ],
+  prefix: "",
+  theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
       },
-      // ... 其他项
-    ],
+    },
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
+    },
   },
-  // ... 其他组
-];
-```
-
-这种配置驱动的方法使我们能够轻松地修改和扩展导航结构，而无需更改组件代码。
-
-### 4. 用户旅程与导航映射
-
-将用户旅程与导航结构相结合：
-
-1. **发现和评估阶段** - 重点展示快速开始和项目结构文档
-2. **入门阶段** - 提供详细的开发环境配置指南
-3. **扩展阶段** - 突出核心功能和扩展功能文档
-4. **维护阶段** - 强调部署和优化相关内容
-
-通过这种方式，我们可以确保导航结构与用户实际使用流程相匹配。
---------------------
-STEP: 创建用户旅程和导航原型
-
-FILE: src/components/layout/sidebar-nav.tsx
-LANGUAGE: typescript
-CODE:
-```typescript
-import { Link, useLocation } from "react-router-dom";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { appNavigationConfig } from "@/components/navigation/app-nav-config";
-
-interface AppSidebarNavProps extends React.HTMLAttributes<HTMLElement> {
-  items: {
-    href?: string;
-    title: string;
-    disabled?: boolean;
-  }[];
+  plugins: [require("tailwindcss-animate")],
 }
-
-export function AppSidebarNav({ className, items, ...props }: AppSidebarNavProps) {
-  const location = useLocation();
-
-  return (
-    <ScrollArea className="h-full py-4">
-      <nav
-        className={cn(
-          "flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1",
-          className
-        )}
-        {...props}
-      >
-        {appNavigationConfig.map((group) => (
-          <div key={group.title} className="pb-4">
-            <h4 className="mb-1 rounded-md px-2 py-1 text-sm font-semibold">
-              {group.title}
-            </h4>
-            <div className="grid grid-cols-1 gap-1">
-              {group.items.map((item) => (
-                <Link
-                  key={item.href}
-                  to={item.href || "#"}
-                  className={cn(
-                    buttonVariants({ variant: "ghost" }),
-                    item.disabled && "cursor-not-allowed opacity-60",
-                    location.pathname === item.href
-                      ? "bg-muted hover:bg-muted"
-                      : "hover:bg-transparent hover:underline",
-                    "justify-start"
-                  )}
-                >
-                  {item.icon && <span className="mr-2">{item.icon}</span>}
-                  {item.title}
-                </Link>
-              ))}
-            </div>
-          </div>
-        ))}
-      </nav>
-    </ScrollArea>
-  );
-}
-
-/**
- * 关于ShadcnUI组件安装：
- * 
- * ShadcnUI的components/ui中的组件可以通过命令安装。
- * ShadcnUI提供了CLI工具，可以方便地添加组件到项目中：
- * 
- * ```bash
- * # 安装特定组件（例如 button）
- * npx shadcn-ui@latest add button
- * 
- * # 安装多个组件
- * npx shadcn-ui@latest add button card input
- * 
- * # 查看可用组件列表
- * npx shadcn-ui@latest add
- * ```
- * 
- * 这种方式的好处是：
- * 1. 自动下载组件代码到您的项目中
- * 2. 根据您的项目配置自动调整组件代码
- * 3. 保持组件与您项目的一致性
- * 4. 可以随时更新或添加新组件
- */
 ```
-HIGHLIGHTS: 1-50
+HIGHLIGHTS: 
+/"1400px"/
 
 CONTENT:
-## 创建用户旅程和导航原型
+# 实现响应式设计
 
-在设计好导航结构后，我们需要创建一个可视化的原型来验证我们的设计是否符合用户需求。
+响应式设计确保应用在各种设备和屏幕尺寸上都能提供良好的用户体验。
 
-### 1. 创建导航组件原型
+## 断点系统
 
-我们可以基于之前的导航配置创建一个侧边栏导航组件：
+TailwindCSS 提供了默认的断点系统：
 
-```tsx
-import { Link } from "react-router-dom";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { navigationConfig } from "@/components/navigation/nav-config";
+- `sm`: 640px
+- `md`: 768px
+- `lg`: 1024px
+- `xl`: 1280px
+- `2xl`: 1536px
 
-interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
-  items: {
-    href?: string;
-    title: string;
-    disabled?: boolean;
-  }[];
-}
+模板在 [tailwind.config.js](file:///Users/bondchen/abucode/templates/basic/react-template/tailwind.config.js) 中自定义了容器设置，最大宽度为 1400px。
 
-export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
-  // 获取当前路径
-  const location = window.location.pathname;
+## 响应式设计策略
 
-  return (
-    <ScrollArea className="h-full py-4">
-      <nav
-        className={cn(
-          "flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1",
-          className
-        )}
-        {...props}
-      >
-        {navigationConfig.map((group) => (
-          <div key={group.title} className="pb-4">
-            <h4 className="mb-1 rounded-md px-2 py-1 text-sm font-semibold">
-              {group.title}
-            </h4>
-            <div className="grid grid-cols-2 lg:grid-cols-1 gap-1">
-              {group.items.map((item) => (
-                <Link
-                  key={item.href}
-                  to={item.href || "#"}
-                  className={cn(
-                    buttonVariants({ variant: "ghost" }),
-                    item.disabled && "cursor-not-allowed opacity-60",
-                    location === item.href
-                      ? "bg-muted hover:bg-muted"
-                      : "hover:bg-transparent hover:underline",
-                    "justify-start"
-                  )}
-                >
-                  {item.title}
-                </Link>
-              ))}
-            </div>
-          </div>
-        ))}
-      </nav>
-    </ScrollArea>
-  );
-}
-```
+1. **移动优先**：从最小屏幕开始设计，逐步增强到大屏幕
+2. **弹性布局**：使用 Flexbox 和 Grid 创建弹性布局
+3. **相对单位**：使用 rem、em、% 等相对单位而非固定像素
+4. **媒体查询**：通过 Tailwind 的断点前缀应用不同样式
 
-### 2. 用户旅程验证
+## 响应式组件设计
 
-通过创建原型，我们可以验证导航设计是否符合用户旅程：
+1. **自适应网格**：
+   ```tsx
+   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+     {/* 内容项 */}
+   </div>
+   ```
 
-1. **发现阶段** - 用户可以快速找到"快速开始"和"项目结构"文档
-2. **入门阶段** - "开发环境"配置指南在导航中清晰可见
-3. **扩展阶段** - 核心功能和扩展功能文档分类明确
-4. **维护阶段** - 部署相关文档易于查找
+2. **隐藏/显示元素**：
+   ```tsx
+   <div className="hidden md:block">
+     {/* 仅在中等及以上屏幕显示 */}
+   </div>
+   ```
 
-### 3. 导航可用性测试
+3. **调整字体大小**：
+   ```tsx
+   <h1 className="text-lg sm:text-xl md:text-2xl">
+     响应式标题
+   </h1>
+   ```
 
-在实际应用中，我们可以通过以下方式测试导航的可用性：
+## 响应式设计原则
 
-1. **用户测试** - 邀请目标用户尝试完成特定任务
-2. **热图分析** - 分析用户点击热点区域
-3. **A/B测试** - 比较不同导航结构的效果
-4. **数据分析** - 跟踪用户在导航中的行为路径
+1. **内容优先**：确保核心内容在所有设备上都可访问
+2. **触摸友好**：在移动设备上提供足够大的触摸目标
+3. **性能优化**：在移动设备上优化图片和资源加载
+4. **一致体验**：在不同设备上保持一致的用户体验
 
-### 4. 迭代优化
-
-基于测试结果，我们可以对导航结构进行迭代优化：
-
-1. 调整导航项的顺序和分组
-2. 优化导航标签的表述
-3. 增加搜索功能以提高查找效率
-4. 添加面包屑导航以改善用户定位
-
-通过这种以用户为中心的设计方法，我们可以创建出既符合用户需求又易于使用的导航系统。
-----------------------------------------
-TITLE: 5-组织 UI 导航和功能结构
-DESCRIPTION: 学习如何组织应用的 UI 导航结构，设计合理的功能模块划分
-DIFFICULTY: intermediate
-ESTIMATED_TIME: 45
-PREREQUISITES: 完成前四节课的所有内容
-TAGS: 导航, 布局, 路由, 功能结构, 组件组织
-
-PROJECT_FILES:
-src/
-src/app/
-src/app/layout.tsx
-src/app/page.tsx
-src/app/dashboard/
-src/app/settings/
-src/components/
-src/components/layout/
-src/components/navigation/
-src/components/ui/
-src/lib/
-src/hooks/
-
-STEPS:
-
-STEP: 设计应用布局结构
-
-FILE: src/components/layout/app-layout.tsx
-LANGUAGE: typescript
-CODE:
-```typescript
-import { Sidebar } from "@/components/layout/sidebar"
-import { Header } from "@/components/layout/header"
-import { cn } from "@/lib/utils"
-
-interface AppLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode
-}
-
-export function AppLayout({ children, className, ...props }: AppLayoutProps) {
-  return (
-    <div className="flex min-h-screen">
-      <Sidebar />
-      <div className="flex flex-col flex-1">
-        <Header />
-        <main className={cn("flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto", className)} {...props}>
-          {children}
-        </main>
-      </div>
-    </div>
-  )
-}
-```
-HIGHLIGHTS: 1-60
-
-CONTENT:
-## 设计应用布局结构
-
-一个良好的应用布局结构对于用户体验至关重要。让我们设计一个包含侧边栏和顶栏的应用布局。
-
-### 1. 创建布局组件
-
-首先创建应用的主布局组件：
-
-```bash
-mkdir -p src/components/layout
-touch src/components/layout/app-layout.tsx
-touch src/components/layout/header.tsx
-touch src/components/layout/sidebar.tsx
-```
-
-### 2. 实现主布局
-
-在 src/components/layout/app-layout.tsx 中实现主布局：
-
-```tsx
-import { Sidebar } from "@/components/layout/sidebar"
-import { Header } from "@/components/layout/header"
-import { cn } from "@/lib/utils"
-
-interface AppLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode
-}
-
-export function AppLayout({ children, className, ...props }: AppLayoutProps) {
-  return (
-    <div className="flex min-h-screen">
-      <Sidebar />
-      <div className="flex flex-col flex-1">
-        <Header />
-        <main className={cn("flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto", className)} {...props}>
-          {children}
-        </main>
-      </div>
-    </div>
-  )
-}
-```
-
-### 3. 创建侧边栏组件
-
-在 src/components/layout/sidebar.tsx 中实现侧边栏：
-
-```tsx
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { 
-  HomeIcon, 
-  SettingsIcon, 
-  BarChartIcon, 
-  UsersIcon,
-  FileTextIcon
-} from "lucide-react"
-import { Link } from "react-router-dom"
-
-const navigation = [
-  { name: "仪表板", href: "/", icon: HomeIcon },
-  { name: "统计", href: "/analytics", icon: BarChartIcon },
-  { name: "用户", href: "/users", icon: UsersIcon },
-  { name: "文档", href: "/documents", icon: FileTextIcon },
-  { name: "设置", href: "/settings", icon: SettingsIcon },
-]
-
-export function Sidebar() {
-  return (
-    <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
-      <div className="flex flex-col flex-grow pt-5 bg-card border-r">
-        <div className="flex items-center justify-center flex-shrink-0 px-4">
-          <div className="text-2xl font-bold text-primary">MyApp</div>
-        </div>
-        <div className="mt-5 flex-1 flex flex-col">
-          <nav className="flex-1 px-2 space-y-1">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className="group flex items-center px-2 py-2 text-sm font-medium rounded-md hover:bg-accent"
-              >
-                <item.icon className="mr-3 flex-shrink-0 h-6 w-6 text-muted-foreground" />
-                {item.name}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      </div>
-    </div>
-  )
-}
-```
-
-### 4. 创建顶栏组件
-
-在 src/components/layout/header.tsx 中实现顶栏：
-
-```tsx
-import { Button } from "@/components/ui/button"
-import { MenuIcon, BellIcon, UserIcon } from "lucide-react"
-
-export function Header() {
-  return (
-    <header className="sticky top-0 z-10 bg-background border-b">
-      <div className="flex items-center justify-between px-4 py-3 md:px-6">
-        <div className="flex items-center">
-          <Button variant="ghost" size="icon" className="md:hidden">
-            <MenuIcon className="h-6 w-6" />
-          </Button>
-          <div className="ml-4 md:ml-0 text-lg font-semibold">Dashboard</div>
-        </div>
-        <div className="flex items-center space-x-4">
-          <Button variant="ghost" size="icon">
-            <BellIcon className="h-5 w-5" />
-          </Button>
-          <Button variant="ghost" size="icon">
-            <UserIcon className="h-5 w-5" />
-          </Button>
-        </div>
-      </div>
-    </header>
-  )
-}
-```
-
-这样的布局结构为应用提供了一个清晰的导航框架，用户可以轻松地在不同功能模块之间切换。
---------------------
-STEP: 实现路由和导航功能
-
-FILE: src/app/routes.tsx
-LANGUAGE: typescript
-CODE:
-```typescript
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import { AppLayout } from "@/components/layout/app-layout"
-import { DashboardPage } from "@/app/dashboard/page"
-import { SettingsPage } from "@/app/settings/page"
-import { AnalyticsPage } from "@/app/analytics/page"
-import { UsersPage } from "@/app/users/page"
-import { DocumentsPage } from "@/app/documents/page"
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <AppLayout />,
-    children: [
-      { index: true, element: <DashboardPage /> },
-      { path: "analytics", element: <AnalyticsPage /> },
-      { path: "users", element: <UsersPage /> },
-      { path: "documents", element: <DocumentsPage /> },
-      { path: "settings", element: <SettingsPage /> },
-    ],
-  },
-])
-
-export function Routes() {
-  return <RouterProvider router={router} />
-}
-```
-HIGHLIGHTS: 1-40
-
-CONTENT:
-## 实现路由和导航功能
-
-路由是现代前端应用的核心功能之一，它允许用户在不同页面之间导航。
-
-### 1. 安装 React Router
-
-首先安装 React Router：
-
-```bash
-pnpm add react-router-dom
-pnpm add -D @types/react-router-dom
-```
-
-### 2. 配置路由
-
-创建路由配置文件 src/app/routes.tsx：
-
-```tsx
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import { AppLayout } from "@/components/layout/app-layout"
-import { DashboardPage } from "@/app/dashboard/page"
-import { SettingsPage } from "@/app/settings/page"
-import { AnalyticsPage } from "@/app/analytics/page"
-import { UsersPage } from "@/app/users/page"
-import { DocumentsPage } from "@/app/documents/page"
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <AppLayout />,
-    children: [
-      { index: true, element: <DashboardPage /> },
-      { path: "analytics", element: <AnalyticsPage /> },
-      { path: "users", element: <UsersPage /> },
-      { path: "documents", element: <DocumentsPage /> },
-      { path: "settings", element: <SettingsPage /> },
-    ],
-  },
-])
-
-export function Routes() {
-  return <RouterProvider router={router} />
-}
-```
-
-### 3. 创建页面组件
-
-创建示例页面组件：
-
-```bash
-mkdir -p src/app/dashboard src/app/settings src/app/analytics src/app/users src/app/documents
-touch src/app/dashboard/page.tsx
-touch src/app/settings/page.tsx
-touch src/app/analytics/page.tsx
-touch src/app/users/page.tsx
-touch src/app/documents/page.tsx
-```
-
-创建仪表板页面 src/app/dashboard/page.tsx：
-
-```tsx
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-
-export function DashboardPage() {
-  return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold">仪表板</h1>
-        <p className="text-muted-foreground">欢迎来到您的仪表板</p>
-      </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">总营收</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">$45,231.89</div>
-            <p className="text-xs text-muted-foreground">+20.1% 相比上月</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">订阅数</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">+12,234</div>
-            <p className="text-xs text-muted-foreground">+180.1% 相比上月</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">销售额</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">+12,234</div>
-            <p className="text-xs text-muted-foreground">+19% 相比上月</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">活跃用户</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">+573</div>
-            <p className="text-xs text-muted-foreground">+201 相比上小时</p>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  )
-}
-```
-
-### 4. 更新主应用文件
-
-更新 src/App.tsx 来使用路由：
-
-```tsx
-import { Routes } from "@/app/routes"
-
-function App() {
-  return <Routes />
-}
-
-export default App
-```
-
-现在应用具有完整的路由功能，用户可以在不同页面之间导航。
---------------------
-STEP: 设计功能模块结构
-
-FILE: src/app/dashboard/page.tsx
-LANGUAGE: typescript
-CODE:
-```typescript
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { 
-  ActivityIcon, 
-  CreditCardIcon, 
-  DollarSignIcon, 
-  UsersIcon,
-  EyeIcon,
-  EyeOffIcon
-} from "lucide-react"
-import { useState } from "react"
-
-export function DashboardPage() {
-  const [showValues, setShowValues] = useState(true)
-
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">仪表板</h1>
-          <p className="text-muted-foreground">欢迎来到您的仪表板</p>
-        </div>
-        <Button 
-          variant="outline" 
-          size="sm"
-          onClick={() => setShowValues(!showValues)}
-        >
-          {showValues ? <EyeOffIcon className="h-4 w-4" /> : <EyeIcon className="h-4 w-4" />}
-          {showValues ? "隐藏" : "显示"} 数值
-        </Button>
-      </div>
-      <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="overview">概览</TabsTrigger>
-          <TabsTrigger value="analytics">分析</TabsTrigger>
-          <TabsTrigger value="reports">报告</TabsTrigger>
-          <TabsTrigger value="notifications">通知</TabsTrigger>
-        </TabsList>
-        <TabsContent value="overview" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">总营收</CardTitle>
-                <DollarSignIcon className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {showValues ? "$45,231.89" : "••••••"}
-                </div>
-                <p className="text-xs text-muted-foreground">+20.1% 相比上月</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">订阅数</CardTitle>
-                <UsersIcon className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {showValues ? "+12,234" : "••••••"}
-                </div>
-                <p className="text-xs text-muted-foreground">+180.1% 相比上月</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">销售额</CardTitle>
-                <CreditCardIcon className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {showValues ? "+12,234" : "••••••"}
-                </div>
-                <p className="text-xs text-muted-foreground">+19% 相比上月</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">活跃用户</CardTitle>
-                <ActivityIcon className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {showValues ? "+573" : "••••••"}
-                </div>
-                <p className="text-xs text-muted-foreground">+201 相比上小时</p>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
-  )
-}
-```
-HIGHLIGHTS: 1-50
-
-CONTENT:
-## 设计功能模块结构
-
-一个良好的功能模块结构有助于代码的维护和扩展。让我们以仪表板为例，展示如何组织功能模块。
-
-### 1. 功能模块划分原则
-
-在设计功能模块时，我们应该遵循以下原则：
-
-1. **单一职责原则** - 每个模块只负责一个功能
-2. **可复用性** - 组件和功能应该设计为可复用的
-3. **可扩展性** - 模块应该易于扩展新功能
-4. **清晰的接口** - 模块之间通过清晰的接口进行通信
-
-### 2. 仪表板功能模块示例
-
-以仪表板为例，我们可以将其划分为以下功能模块：
-
-1. **数据概览模块** - 显示关键业务指标
-2. **图表分析模块** - 以图表形式展示数据趋势
-3. **最近活动模块** - 显示最近的用户活动
-4. **快速操作模块** - 提供常用功能的快捷入口
-
-### 3. 实现交互功能
-
-在仪表板中添加交互功能，如隐藏敏感数据：
-
-```tsx
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { 
-  EyeIcon, 
-  EyeOffIcon,
-  DollarSignIcon,
-  UsersIcon,
-  CreditCardIcon,
-  ActivityIcon
-} from "lucide-react"
-import { useState } from "react"
-
-export function DashboardPage() {
-  const [showValues, setShowValues] = useState(true)
-
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">仪表板</h1>
-          <p className="text-muted-foreground">欢迎来到您的仪表板</p>
-        </div>
-        <Button 
-          variant="outline" 
-          size="sm"
-          onClick={() => setShowValues(!showValues)}
-        >
-          {showValues ? <EyeOffIcon className="h-4 w-4" /> : <EyeIcon className="h-4 w-4" />}
-          {showValues ? "隐藏" : "显示"} 数值
-        </Button>
-      </div>
-      {/* ... 其他内容 */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">总营收</CardTitle>
-            <DollarSignIcon className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {showValues ? "$45,231.89" : "••••••"}
-            </div>
-            <p className="text-xs text-muted-foreground">+20.1% 相比上月</p>
-          </CardContent>
-        </Card>
-        {/* ... 其他卡片 */}
-      </div>
-    </div>
-  )
-}
-```
-
-### 4. 使用标签页组织内容
-
-使用标签页来组织不同类型的内容：
-
-```tsx
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
-export function DashboardPage() {
-  return (
-    <div className="space-y-6">
-      {/* ... 其他内容 */}
-      <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="overview">概览</TabsTrigger>
-          <TabsTrigger value="analytics">分析</TabsTrigger>
-          <TabsTrigger value="reports">报告</TabsTrigger>
-          <TabsTrigger value="notifications">通知</TabsTrigger>
-        </TabsList>
-        <TabsContent value="overview" className="space-y-4">
-          {/* 概览内容 */}
-        </TabsContent>
-        <TabsContent value="analytics">
-          {/* 分析内容 */}
-        </TabsContent>
-        {/* ... 其他标签页内容 */}
-      </Tabs>
-    </div>
-  )
-}
-```
-
-通过这种方式，我们可以创建结构清晰、易于维护和扩展的应用程序。
-----------------------------------------
-TITLE: 6-UI 效果设计和实现过程
-DESCRIPTION: 学习如何设计 UI 效果，包括设计原则、实现过程和最佳实践
-DIFFICULTY: intermediate
-ESTIMATED_TIME: 50
-PREREQUISITES: 完成前五节课的所有内容
-TAGS: ui-design, 设计原则, 动画效果, 用户体验
-
-PROJECT_FILES:
-src/
-src/components/
-src/components/ui/
-src/lib/
-src/styles/
-src/hooks/
-
-STEPS:
-
-STEP: 确定 UI 设计原则
-
-FILE: src/styles/design-principles.md
-LANGUAGE: markdown
-CODE:
-```markdown
-# UI 设计原则
-
-## 1. 一致性原则 (Consistency)
-- 保持整个应用的视觉风格统一
-- 统一的交互模式和导航结构
-- 一致的颜色、字体和间距系统
-
-## 2. 简洁性原则 (Simplicity)
-- 避免不必要的复杂性
-- 清晰的信息层次结构
-- 减少用户的认知负担
-
-## 3. 可用性原则 (Usability)
-- 界面元素易于理解和使用
-- 提供清晰的反馈和引导
-- 优化用户操作流程
-
-## 4. 可访问性原则 (Accessibility)
-- 支持键盘导航
-- 合适的颜色对比度
-- 语义化的 HTML 结构
-
-## 5. 响应式设计原则 (Responsive Design)
-- 适配不同屏幕尺寸
-- 灵活的布局和组件
-- 触摸友好的交互元素
-
-## 6. 性能原则 (Performance)
-- 优化加载时间和渲染性能
-- 合理使用动画效果
-- 减少不必要的重绘和回流
-```
-HIGHLIGHTS: 1-30
-
-CONTENT:
-## 确定 UI 设计原则
-
-在开始设计 UI 效果之前，我们需要明确一些核心设计原则，这些原则将指导我们做出设计决策。
-
-### 1. 一致性原则
-
-一致性是良好 UI 设计的基础。用户应该在整个应用中体验到统一的视觉风格和交互模式。
-
-实现方法：
-- 建立设计系统，定义颜色、字体、间距等规范
-- 统一组件的样式和行为
-- 保持导航结构的一致性
-
-### 2. 简洁性原则
-
-简洁的界面更容易理解和使用。我们应该避免不必要的复杂性，让用户能够专注于核心任务。
-
-实现方法：
-- 移除不必要的元素
-- 使用清晰的信息层次结构
-- 提供直观的操作流程
-
-### 3. 可用性原则
-
-界面应该易于使用，用户能够轻松完成任务并获得清晰的反馈。
-
-实现方法：
-- 提供明确的操作指引
-- 设计直观的交互元素
-- 给出及时的操作反馈
-
-### 4. 可访问性原则
-
-确保所有用户，包括残障人士，都能够使用我们的应用。
-
-实现方法：
-- 遵循 WCAG 可访问性标准
-- 提供足够的颜色对比度
-- 支持键盘导航和屏幕阅读器
-
-### 5. 响应式设计原则
-
-现代应用需要在各种设备和屏幕尺寸上都能良好显示。
-
-实现方法：
-- 使用弹性布局和网格系统
-- 适配不同的屏幕断点
-- 优化触摸交互体验
-
-### 6. 性能原则
-
-良好的性能是用户体验的重要组成部分。
-
-实现方法：
-- 优化图片和资源加载
-- 合理使用动画效果
-- 减少不必要的重绘和回流
-
-通过遵循这些设计原则，我们可以创建出既美观又实用的 UI 效果。
---------------------
-STEP: 设计和实现动画效果
-
-FILE: src/lib/animations.ts
-LANGUAGE: typescript
-CODE:
-```typescript
-import { Variants } from "framer-motion";
-
-// 页面切换动画
-export const pageVariants: Variants = {
-  initial: {
-    opacity: 0,
-    y: 20,
-  },
-  enter: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.3,
-      ease: "easeOut",
-    },
-  },
-  exit: {
-    opacity: 0,
-    y: -20,
-    transition: {
-      duration: 0.2,
-      ease: "easeIn",
-    },
-  },
-};
-
-// 卡片动画
-export const cardVariants: Variants = {
-  initial: {
-    opacity: 0,
-    y: 30,
-  },
-  enter: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.4,
-      ease: "easeOut",
-    },
-  },
-};
-
-// 悬停效果
-export const hoverVariants: Variants = {
-  hover: {
-    scale: 1.02,
-    transition: {
-      duration: 0.2,
-      ease: "easeInOut",
-    },
-  },
-};
-
-// 按钮点击效果
-export const tapVariants: Variants = {
-  tap: {
-    scale: 0.98,
-    transition: {
-      duration: 0.1,
-      ease: "easeInOut",
-    },
-  },
-};
-```
-HIGHLIGHTS: 1-50
-
-CONTENT:
-## 设计和实现动画效果
-
-动画效果可以显著提升用户体验，使界面更加生动和直观。让我们看看如何设计和实现这些效果。
-
-### 1. 动画设计原则
-
-在设计动画效果时，我们需要遵循以下原则：
-
-1. **目的明确** - 每个动画都应该有明确的目的，如提供反馈、引导注意力或改善用户体验
-2. **性能良好** - 动画不应该影响应用性能
-3. **时长合适** - 动画时长应该适中，既不能太快也不能太慢
-4. **风格统一** - 所有动画应该保持一致的风格和节奏
-
-### 2. 常用动画类型
-
-#### 页面切换动画
-页面切换动画可以帮助用户理解页面之间的关系和导航方向。
-
-```typescript
-// 页面切换动画
-export const pageVariants: Variants = {
-  initial: {
-    opacity: 0,
-    y: 20,
-  },
-  enter: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.3,
-      ease: "easeOut",
-    },
-  },
-  exit: {
-    opacity: 0,
-    y: -20,
-    transition: {
-      duration: 0.2,
-      ease: "easeIn",
-    },
-  },
-};
-```
-
-#### 组件进入动画
-组件进入动画可以让界面元素以更自然的方式出现。
-
-```typescript
-// 卡片动画
-export const cardVariants: Variants = {
-  initial: {
-    opacity: 0,
-    y: 30,
-  },
-  enter: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.4,
-      ease: "easeOut",
-    },
-  },
-};
-```
-
-### 3. 交互状态动画
-
-#### 悬停效果
-悬停效果可以增强用户交互体验。
-
-```typescript
-// 悬停效果
-export const hoverVariants: Variants = {
-  hover: {
-    scale: 1.02,
-    transition: {
-      duration: 0.2,
-      ease: "easeInOut",
-    },
-  },
-};
-```
-
-#### 点击效果
-点击效果可以提供即时的触觉反馈。
-
-```typescript
-// 按钮点击效果
-export const tapVariants: Variants = {
-  tap: {
-    scale: 0.98,
-    transition: {
-      duration: 0.1,
-      ease: "easeInOut",
-    },
-  },
-};
-```
-
-### 4. 在组件中使用动画
-
-在实际组件中使用这些动画效果：
-
-```tsx
-import { motion } from "framer-motion";
-import { pageVariants, cardVariants, hoverVariants, tapVariants } from "@/lib/animations";
-
-export function DashboardPage() {
-  return (
-    <motion.div
-      initial="initial"
-      animate="enter"
-      exit="exit"
-      variants={pageVariants}
-    >
-      <div className="space-y-6">
-        <motion.div
-          variants={cardVariants}
-          initial="initial"
-          animate="enter"
-        >
-          <h1 className="text-3xl font-bold">仪表板</h1>
-        </motion.div>
-        
-        <motion.div
-          whileHover="hover"
-          whileTap="tap"
-          variants={{ ...hoverVariants, ...tapVariants }}
-        >
-          <Button>交互按钮</Button>
-        </motion.div>
-      </div>
-    </motion.div>
-  );
-}
-```
-
-通过这种方式，我们可以为应用添加流畅且有意义的动画效果，提升整体用户体验。
---------------------
-STEP: 创建设计系统和组件库
-
-FILE: src/components/ui/design-system.tsx
-LANGUAGE: typescript
-CODE:
-```typescript
-// Design System documentation component
-export function DesignSystem() {
-  return (
-    <div className="space-y-8">
-      <div>
-        <h2 className="text-2xl font-bold mb-4">颜色系统</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <ColorPalette name="Primary" colors={["bg-primary", "bg-primary/90", "bg-primary/80"]} />
-          <ColorPalette name="Secondary" colors={["bg-secondary", "bg-secondary/90", "bg-secondary/80"]} />
-          <ColorPalette name="Accent" colors={["bg-accent", "bg-accent/90", "bg-accent/80"]} />
-          <ColorPalette name="Muted" colors={["bg-muted", "bg-muted/90", "bg-muted/80"]} />
-        </div>
-      </div>
-      
-      <div>
-        <h2 className="text-2xl font-bold mb-4">排版系统</h2>
-        <div className="space-y-2">
-          <TypographyExample 
-            label="H1 - Page Title" 
-            className="text-4xl font-bold"
-            text="The quick brown fox"
-          />
-          <TypographyExample 
-            label="H2 - Section Heading" 
-            className="text-3xl font-bold"
-            text="The quick brown fox"
-          />
-          <TypographyExample 
-            label="H3 - Subheading" 
-            className="text-2xl font-semibold"
-            text="The quick brown fox"
-          />
-          <TypographyExample 
-            label="Body - Large" 
-            className="text-lg"
-            text="The quick brown fox jumps over the lazy dog"
-          />
-          <TypographyExample 
-            label="Body - Regular" 
-            className="text-base"
-            text="The quick brown fox jumps over the lazy dog"
-          />
-          <TypographyExample 
-            label="Body - Small" 
-            className="text-sm"
-            text="The quick brown fox jumps over the lazy dog"
-          />
-        </div>
-      </div>
-      
-      <div>
-        <h2 className="text-2xl font-bold mb-4">间距系统</h2>
-        <div className="space-y-2">
-          <SpacingExample label="Space 1" size="h-1" />
-          <SpacingExample label="Space 2" size="h-2" />
-          <SpacingExample label="Space 3" size="h-3" />
-          <SpacingExample label="Space 4" size="h-4" />
-          <SpacingExample label="Space 5" size="h-5" />
-          <SpacingExample label="Space 6" size="h-6" />
-          <SpacingExample label="Space 8" size="h-8" />
-          <SpacingExample label="Space 10" size="h-10" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ColorPalette({ name, colors }: { name: string; colors: string[] }) {
-  return (
-    <div className="space-y-2">
-      <h3 className="font-medium">{name}</h3>
-      <div className="space-y-2">
-        {colors.map((color, index) => (
-          <div key={index} className="flex items-center gap-2">
-            <div className={`w-10 h-10 rounded ${color}`} />
-            <span className="text-sm">{color}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function TypographyExample({ label, className, text }: { label: string; className: string; text: string }) {
-  return (
-    <div className="flex items-center gap-4">
-      <div className="w-40">
-        <span className="text-sm text-muted-foreground">{label}</span>
-      </div>
-      <div className={className}>{text}</div>
-    </div>
-  );
-}
-
-function SpacingExample({ label, size }: { label: string; size: string }) {
-  return (
-    <div className="flex items-center gap-4">
-      <div className="w-40">
-        <span className="text-sm text-muted-foreground">{label}</span>
-      </div>
-      <div className="flex items-center gap-2">
-        <div className={`w-4 bg-primary ${size}`} />
-        <span className="text-sm">{size.replace('h-', '')} (rem)</span>
-      </div>
-    </div>
-  );
-}
-```
-HIGHLIGHTS: 1-100
-
-CONTENT:
-## 创建设计系统和组件库
-
-设计系统是确保 UI 一致性和提高开发效率的关键。让我们看看如何创建一个完整的设计系统。
-
-### 1. 设计系统的重要性
-
-设计系统是一套统一的设计原则、组件和指南，可以帮助团队：
-
-1. **保持一致性** - 确保整个产品线的视觉和交互一致性
-2. **提高效率** - 复用组件和模式，减少重复设计和开发工作
-3. **改善协作** - 为设计师和开发者提供共同语言
-4. **保证质量** - 通过标准化组件确保用户体验质量
-
-### 2. 设计系统的核心组成部分
-
-#### 颜色系统
-颜色系统定义了应用中使用的所有颜色，包括主色、辅助色、状态色等。
-
-```tsx
-<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-  <ColorPalette name="Primary" colors={["bg-primary", "bg-primary/90", "bg-primary/80"]} />
-  <ColorPalette name="Secondary" colors={["bg-secondary", "bg-secondary/90", "bg-secondary/80"]} />
-  <ColorPalette name="Accent" colors={["bg-accent", "bg-accent/90", "bg-accent/80"]} />
-  <ColorPalette name="Muted" colors={["bg-muted", "bg-muted/90", "bg-muted/80"]} />
-</div>
-```
-
-#### 排版系统
-排版系统定义了应用中的字体大小、字重、行高等文本样式。
-
-```tsx
-<TypographyExample 
-  label="H1 - Page Title" 
-  className="text-4xl font-bold"
-  text="The quick brown fox"
-/>
-<TypographyExample 
-  label="H2 - Section Heading" 
-  className="text-3xl font-bold"
-  text="The quick brown fox"
-/>
-```
-
-#### 间距系统
-间距系统定义了应用中使用的统一间距单位。
-
-```tsx
-<SpacingExample label="Space 4" size="h-4" />
-<SpacingExample label="Space 6" size="h-6" />
-<SpacingExample label="Space 8" size="h-8" />
-```
-
-### 3. 组件库开发
-
-基于设计系统，我们可以开发一套可复用的组件库：
-
-#### 基础组件
-- Button（按钮）
-- Input（输入框）
-- Card（卡片）
-- Typography（排版）
-
-#### 布局组件
-- Grid（网格）
-- Container（容器）
-- Flex（弹性布局）
-
-#### 导航组件
-- Navigation（导航）
-- Breadcrumb（面包屑）
-- Pagination（分页）
-
-#### 反馈组件
-- Alert（警告）
-- Toast（提示）
-- Modal（模态框）
-
-### 4. 设计系统的维护和更新
-
-设计系统不是一成不变的，需要根据项目发展和用户反馈进行持续维护：
-
-1. **定期审查** - 定期检查组件的使用情况和效果
-2. **收集反馈** - 从设计师和开发者那里收集使用反馈
-3. **迭代更新** - 根据反馈和需求更新设计系统
-4. **文档完善** - 保持文档与实际实现同步
-
-通过建立和维护一个完善的设计系统，我们可以确保应用 UI 的一致性和高质量，同时提高团队的开发效率。
+通过合理运用响应式设计，可以确保应用在桌面、平板和手机等各种设备上都能提供优秀的用户体验。
