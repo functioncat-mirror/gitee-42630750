@@ -2,7 +2,7 @@
 COURSE
 ========================================
 TITLE: 搭建本地环境
-DESCRIPTION: 学习如何在本地环境中设置和运行 React + TailwindCSS + ShadcnUI + Vite 项目
+DESCRIPTION: 学习如何在本地环境中设置和运行这个项目
 DIFFICULTY: beginner
 ESTIMATED_TIME: 15
 PREREQUISITES: node-js, npm
@@ -28,20 +28,34 @@ CODE:
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+// HIGHLIGHT_CODE_START
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
+// HIGHLIGHT_CODE_END
   },
   "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/react": "^18.2.64",
+    "@types/react-dom": "^18.2.21",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.18",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.6"
   }
 }
 ```
-HIGHLIGHTS: 
-/"dev": "vite"/
-/"build": "tsc && vite build"/
 
 CONTENT:
 # 搭建本地环境
@@ -57,533 +71,23 @@ node --version
 npm --version
 ```
 
-推荐使用 Node.js 16+ 版本以获得最佳性能和兼容性。
+>Node.js 18 以上
 
-项目中的 [package.json](file:///Users/bondchen/abucode/templates/basic/react-template/package.json) 文件包含了项目的所有依赖和可用脚本。您可以看到定义了以下几个关键脚本：
+项目中的 [package.json](file://package.json) 文件包含了项目的所有依赖和可用脚本。您可以看到定义了以下几个关键脚本：
 - `dev`: 启动开发服务器
-- `build`: 构建生产版本
-- `preview`: 预览生产构建
+- `build`: 构建版本
+- `preview`: 预览构建
 - `lint`: 运行代码检查
 
 这些脚本将用于项目的不同阶段。
 --------------------
 STEP: 安装项目依赖
 FILE: package.json
-LANGUAGE: shell
-CODE:
-```
-npm install
-```
-HIGHLIGHTS: 
-/npm install/
-
-CONTENT:
-# 安装项目依赖
-
-在项目根目录中打开终端，运行以下命令安装所有必需的依赖项：
-
-```bash
-npm install
-```
-
-这将根据 [package.json](file:///Users/bondchen/abucode/templates/basic/react-template/package.json) 中定义的依赖项安装所有包。安装过程可能需要一些时间，具体取决于您的网络速度。
-
-依赖项包括：
-- React 和相关库
-- TailwindCSS 和相关工具
-- ShadcnUI 组件
-- Vite 构建工具
-- TypeScript 和相关类型定义
---------------------
-STEP: 启动开发服务器
-FILE: package.json
-LANGUAGE: shell
-CODE:
-```
-npm run dev
-```
-HIGHLIGHTS: 
-/npm run dev/
-
-CONTENT:
-# 启动开发服务器
-
-依赖安装完成后，您可以启动开发服务器：
-
-```bash
-npm run dev
-```
-
-此命令将启动 Vite 开发服务器，默认情况下在 [http://localhost:5173](http://localhost:5173) 上运行。
-
-Vite 提供了许多现代开发功能：
-- 快速的冷启动
-- 即时的模块热更新（HMR）
-- 按需编译，只编译当前页面使用的代码
-- 丰富的错误提示
-
-您应该能在浏览器中看到项目的欢迎页面，这意味着您的本地环境已经成功搭建。
-----------------------------------------
-TITLE: 部署到函数猫
-DESCRIPTION: 学习如何将 React + TailwindCSS + ShadcnUI + Vite 项目部署到 FunctionCat 平台
-DIFFICULTY: beginner
-ESTIMATED_TIME: 10
-PREREQUISITES: 搭建本地环境
-TAGS: deployment, functioncat, hosting
-
-PROJECT_FILES:
-functioncat.yaml
-package.json
-src/
-dist/
-
-STEPS:
-STEP: 了解 FunctionCat 部署配置
-FILE: functioncat.yaml
-LANGUAGE: yaml
-CODE:
-```
-system: 1.0.0
-info:
-  name: React + TailwindCSS + ShadcnUI + Vite Template
-  vars: {}
-
-envs:
-  dev:
-    branch: main
-  prod:
-    branch: main
-
-routes:
-  main_env: prod
-  main_app: frontend
-
-apps:
-  frontend:
-    type: web_frontend
-    envs:
-      dev:
-        build:
-          script: npm install; npm run build
-        provision:
-          root_path: dist
-          type: nodejs18x
-      prod:
-        build:
-          script: npm install; npm run build
-        provision:
-          root_path: dist
-          type: nodejs18x
-```
-HIGHLIGHTS: 
-/system: 1\.0\.0/
-/type: web_frontend/
-/(?s)dev:.*? npm run build/
-
-
-CONTENT:
-# 部署到函数猫
-
-FunctionCat 是一个现代化的应用托管平台，支持一键部署您的前端应用。本模板已经预配置了部署设置，使您能够轻松地将应用部署到 FunctionCat。
-
-## 了解 FunctionCat 部署配置
-
-部署配置在 [functioncat.yaml](file:///Users/bondchen/abucode/templates/basic/react-template/functioncat.yaml) 文件中定义。这个文件告诉 FunctionCat 如何构建和部署您的应用：
-
-- `system`: FunctionCat 配置版本
-- `apps.frontend.type`: 应用类型（web_frontend 表示这是一个前端 Web 应用）
-- `apps.frontend.envs.dev.build.script`: 开发环境构建脚本
-- `apps.frontend.envs.prod.build.script`: 生产环境构建脚本
-- `provision.root_path`: 构建产物目录（dist）
-
-您可以看到构建脚本包括两个步骤：
-1. `npm install` - 安装依赖
-2. `npm run build` - 构建生产版本
-
-构建产物将放在 [dist](file:///Users/bondchen/abucode/templates/basic/react-template/dist) 目录中，这是 FunctionCat 将提供服务的目录。
---------------------
-STEP: 在 FunctionCat 上部署应用
-FILE: README.md
-LANGUAGE: markdown
-CODE:
-```
-## 部署
-
-此模板已准备好在 FunctionCat 上部署。只需按照 FunctionCat 平台中的标准部署流程操作即可。
-```
-HIGHLIGHTS: 
-/## 部署/
-/此模板已准备好在 FunctionCat 上部署。只需按照 FunctionCat 平台中的标准部署流程操作即可。/
-
-CONTENT:
-# 在 FunctionCat 上部署应用
-
-要在 FunctionCat 上部署您的应用，请按照以下步骤操作：
-
-1. 将您的代码推送到 Git 仓库（GitHub、GitLab 或 Gitee）
-2. 登录 FunctionCat 控制台
-3. 创建新应用或选择现有应用
-4. 连接您的 Git 仓库
-5. 配置部署设置（如果需要）
-6. 触发部署
-
-FunctionCat 将自动：
-- 克隆您的代码
-- 运行构建脚本（`npm install; npm run build`）
-- 将 [dist](file:///Users/bondchen/abucode/templates/basic/react-template/dist) 目录部署为静态网站
-
-部署完成后，您将获得一个 FunctionCat 提供的 URL，您的应用就可以通过这个 URL 访问了。
-
-由于模板已经配置了 [functioncat.yaml](file:///Users/bondchen/abucode/templates/basic/react-template/functioncat.yaml) 文件，因此大部分配置已经自动完成，您只需关注代码本身。
---------------------
-STEP: 构建和预览生产版本
-FILE: package.json
-LANGUAGE: shell
-CODE:
-```
-npm run build
-npm run preview
-```
-HIGHLIGHTS: 
-/npm run build/
-/npm run preview/
-
-CONTENT:
-# 构建和预览生产版本
-
-在部署之前，您可以本地构建和预览生产版本以确保一切正常：
-
-1. 构建生产版本：
-   ```bash
-   npm run build
-   ```
-
-2. 预览生产版本：
-   ```bash
-   npm run preview
-   ```
-
-`npm run build` 命令将执行 TypeScript 编译和 Vite 构建过程，生成优化的生产代码并放置在 [dist](file:///Users/bondchen/abucode/templates/basic/react-template/dist) 目录中。
-
-`npm run preview` 命令将在本地启动一个服务器来预览构建后的应用，让您在部署前确认一切正常。
-
-这些命令与 FunctionCat 上的部署过程使用相同的脚本，确保本地和线上环境的一致性。
-----------------------------------------
-TITLE: 项目结构介绍
-DESCRIPTION: 深入了解 React + TailwindCSS + ShadcnUI + Vite 模板的项目结构和各个文件的作用
-DIFFICULTY: beginner
-ESTIMATED_TIME: 15
-PREREQUISITES: 搭建本地环境
-TAGS: project-structure, file-organization, architecture
-
-PROJECT_FILES:
-src/
-src/assets/
-src/components/
-src/components/ui/
-src/lib/
-src/App.tsx
-src/main.tsx
-src/index.css
-components.json
-tailwind.config.js
-postcss.config.js
-vite.config.ts
-tsconfig.json
-package.json
-
-STEPS:
-STEP: 主要目录和文件概览
-FILE: README.md
-LANGUAGE: markdown
-CODE:
-```
-## 项目结构
-
-
-.
-├── src/
-│   ├── assets/           # 静态资源
-│   ├── components/       # React 组件
-│   │   └── ui/           # ShadcnUI 组件
-│   ├── lib/              # 工具函数
-│   ├── App.tsx           # 主应用组件
-│   ├── main.tsx          # 入口文件
-│   └── index.css         # 全局样式
-├── components.json       # ShadcnUI 配置
-├── tailwind.config.js    # TailwindCSS 配置
-├── postcss.config.js     # PostCSS 配置
-├── vite.config.ts        # Vite 配置
-├── tsconfig.json         # TypeScript 配置
-└── package.json          # 依赖和脚本
-
-```
-HIGHLIGHTS: 
-/components.json/
-
-CONTENT:
-# 主要目录和文件概览
-
-项目的结构遵循现代前端应用的最佳实践，使得代码组织清晰、易于维护。
-
-## 核心目录
-
-- [src/](file:///Users/bondchen/abucode/templates/basic/react-template/src): 包含所有源代码
-  - [assets/](file:///Users/bondchen/abucode/templates/basic/react-template/src/assets): 静态资源文件，如图片、字体等
-  - [components/](file:///Users/bondchen/abucode/templates/basic/react-template/src/components): React 组件
-    - [ui/](file:///Users/bondchen/abucode/templates/basic/react-template/src/components/ui): ShadcnUI 预构建组件
-  - [lib/](file:///Users/bondchen/abucode/templates/basic/react-template/src/lib): 工具函数和辅助代码
-- [src/App.tsx](file:///Users/bondchen/abucode/templates/basic/react-template/src/App.tsx): 主应用组件
-- [src/main.tsx](file:///Users/bondchen/abucode/templates/basic/react-template/src/main.tsx): 应用入口文件
-- [src/index.css](file:///Users/bondchen/abucode/templates/basic/react-template/src/index.css): 全局样式文件
-
-## 配置文件
-
-- [components.json](file:///Users/bondchen/abucode/templates/basic/react-template/components.json): ShadcnUI 组件配置
-- [tailwind.config.js](file:///Users/bondchen/abucode/templates/basic/react-template/tailwind.config.js): TailwindCSS 配置文件
-- [postcss.config.js](file:///Users/bondchen/abucode/templates/basic/react-template/postcss.config.js): PostCSS 配置文件
-- [vite.config.ts](file:///Users/bondchen/abucode/templates/basic/react-template/vite.config.ts): Vite 构建工具配置
-- [tsconfig.json](file:///Users/bondchen/abucode/templates/basic/react-template/tsconfig.json): TypeScript 配置文件
-- [package.json](file:///Users/bondchen/abucode/templates/basic/react-template/package.json): 项目依赖和脚本配置
---------------------
-STEP: 源代码目录详解
-FILE: src/App.tsx
-LANGUAGE: typescript
-CODE:
-```
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  HomeIcon, 
-  SettingsIcon, 
-  BarChartIcon, 
-  UsersIcon,
-  SunIcon,
-  MoonIcon
-} from "lucide-react";
-import { useState, useEffect } from "react";
-
-function App() {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  
-  // 检查系统主题偏好
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else if (systemPrefersDark) {
-      setTheme('dark');
-    }
-  }, []);
-  
-  // 应用主题到DOM
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-  
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
-
-}
-```
-HIGHLIGHTS: 
-/import { Button } from "@\/components\/ui\/button";/
-/import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@\/components\/ui\/card";/
-/const \[theme, setTheme\] = useState<'light' \| 'dark'>\('light'\);/
-
-CONTENT:
-# 源代码目录详解
-
-[src/](file:///Users/bondchen/abucode/templates/basic/react-template/src) 目录包含了项目的所有源代码。
-
-## 核心文件
-
-[src/App.tsx](file:///Users/bondchen/abucode/templates/basic/react-template/src/App.tsx) 是主应用组件，它展示了应用的主要界面。从代码中可以看到：
-
-1. 导入了多个 ShadcnUI 组件，如 Button、Card、Input、Tabs 等
-2. 使用 lucide-react 图标库提供的图标组件
-3. 实现了主题切换功能（light/dark 模式）
-4. 使用 React Hooks 管理状态和副作用
-
-[src/main.tsx](file:///Users/bondchen/abucode/templates/basic/react-template/src/main.tsx) 是应用入口文件，负责渲染根组件到 DOM。
-
-[src/index.css](file:///Users/bondchen/abucode/templates/basic/react-template/src/index.css) 包含全局样式和主题变量定义。
-
-## 组件目录
-
-[components/](file:///Users/bondchen/abucode/templates/basic/react-template/src/components) 目录用于存放项目自定义组件。
-
-[components/ui/](file:///Users/bondchen/abucode/templates/basic/react-template/src/components/ui) 目录包含所有 ShadcnUI 预构建组件，这些组件可以按需添加和使用。
-
-## 工具函数
-
-[lib/](file:///Users/bondchen/abucode/templates/basic/react-template/src/lib) 目录用于存放工具函数和辅助代码，例如格式化函数、API 调用封装等。
---------------------
-STEP: 配置文件详解
-FILE: tailwind.config.js
-LANGUAGE: javascript
-CODE:
-```
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: ["class"],
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-  ],
-  prefix: "",
-  theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
-    extend: {
-      colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-      },
-    },
-  },
-  plugins: [require("tailwindcss-animate")],
-}
-```
-HIGHLIGHTS: 
-/darkMode: \["class"\],/
-
-CONTENT:
-# 配置文件详解
-
-项目的配置文件决定了构建工具、样式系统和开发环境的行为。
-
-## 样式配置
-
-[tailwind.config.js](file:///Users/bondchen/abucode/templates/basic/react-template/tailwind.config.js) 是 TailwindCSS 的配置文件：
-
-1. `darkMode: ["class"]` 启用基于 CSS 类的暗色主题支持
-2. `content` 数组指定了需要扫描的文件，Tailwind 将从这些文件中提取使用的类名
-3. `theme` 对象扩展了默认主题，定义了颜色、间距、动画等
-4. `plugins` 数组包含了使用的插件，如 tailwindcss-animate
-
-[postcss.config.js](file:///Users/bondchen/abucode/templates/basic/react-template/postcss.config.js) 配置了 PostCSS 插件，主要用于处理 TailwindCSS。
-
-## 构建配置
-
-[vite.config.ts](file:///Users/bondchen/abucode/templates/basic/react-template/vite.config.ts) 配置了 Vite 构建工具，包括路径别名、插件等。
-
-[tsconfig.json](file:///Users/bondchen/abucode/templates/basic/react-template/tsconfig.json) 配置了 TypeScript 编译选项。
-
-## 组件配置
-
-[components.json](file:///Users/bondchen/abucode/templates/basic/react-template/components.json) 是 ShadcnUI 的配置文件，定义了组件的安装路径和样式配置。
-----------------------------------------
-TITLE: 目标用户和功能范围
-DESCRIPTION: 基于用户中心设计模型，学习如何定义新应用的目标用户和功能范围
-DIFFICULTY: intermediate
-ESTIMATED_TIME: 20
-PREREQUISITES: 项目结构介绍
-TAGS: user-centered-design, scope, requirements, planning
-
-PROJECT_FILES:
-src/
-src/components/
-src/components/ui/
-src/lib/utils.ts
-package.json
-README.md
-
-STEPS:
-STEP: 确定目标用户群体
-FILE: README.md
-LANGUAGE: markdown
-CODE:
-```
-# React + TailwindCSS + ShadcnUI + Vite 模板
-
-这是一个基础模板，可以在FunctionCat中进行设置、配置、扩展和部署。它包括：
-
-- React 18
-- TypeScript
-- TailwindCSS
-- ShadcnUI 组件
-- Vite 构建工具
-```
-HIGHLIGHTS: 
-/这是一个基础模板，可以在FunctionCat中进行设置、配置、扩展和部署。/
-
-CONTENT:
-# 确定目标用户群体
-
-在开始构建新应用之前，首先要明确目标用户群体。这将直接影响后续的功能设计和用户体验决策。
-
-## 用户画像分析
-
-基于模板的技术栈特点（React、TypeScript、TailwindCSS、ShadcnUI），我们可以推测目标用户可能包括：
-
-1. **前端开发人员**：熟悉现代前端技术栈，希望快速构建原型或完整应用
-2. **UI/UX 设计师**：需要与开发团队协作，关注界面美观和用户体验
-3. **初创团队**：资源有限但需要快速推出产品
-4. **个人开发者**：希望构建个人项目或作品集
-
-## 用户需求分析
-
-不同用户群体有不同的需求：
-
-- **开发人员**需要：高效的开发工具、清晰的代码结构、易于扩展的架构
-- **设计师**需要：灵活的样式系统、丰富的UI组件、一致的设计语言
-- **团队**需要：标准化的开发流程、良好的文档、易于协作的代码结构
-- **个人开发者**需要：低门槛入门、完整的功能示例、清晰的学习路径
-
-了解这些用户需求有助于我们确定应用的功能范围和优先级。
---------------------
-STEP: 定义功能需求
-FILE: package.json
 LANGUAGE: json
 CODE:
 ```
 {
-  "name": "react-tailwind-shadcn-template",
+  "name": "react-vite-tailwind-shadcn-template",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -593,387 +97,7 @@ CODE:
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
-  "dependencies": {
-  },
-  "devDependencies": {
-  }
-}
-```
-HIGHLIGHTS: 
-/"dev": "vite"/
-/"build": "tsc && vite build"/
-
-CONTENT:
-# 定义功能需求
-
-功能需求描述了应用应该具备的具体功能和特性。基于用户需求分析，我们可以定义以下功能需求：
-
-## 核心功能需求
-
-1. **响应式设计**：应用在各种设备上都能良好显示
-   - 移动端适配
-   - 平板适配
-   - 桌面端优化
-
-2. **主题支持**：支持 Light 和 Dark 模式
-   - 系统主题自动检测
-   - 用户主题偏好保存
-   - 平滑的主题切换动画
-
-3. **组件系统**：丰富的 UI 组件库
-   - 按需加载组件
-   - 一致的设计语言
-   - 易于定制的样式
-
-4. **开发体验**：高效的开发工具链
-   - 快速热重载
-   - TypeScript 类型检查
-   - 代码规范检查
-
-## 扩展功能需求
-
-1. **路由管理**：支持多页面应用
-2. **状态管理**：复杂应用的状态管理方案
-3. **国际化**：多语言支持
-4. **性能优化**：代码分割、懒加载等
-5. **可访问性**：符合 WCAG 标准的无障碍设计
-
-这些功能需求将指导我们后续的开发工作，确保应用满足用户期望。
---------------------
-STEP: 定义内容需求
-FILE: src/components/ui/button.tsx
-LANGUAGE: typescript
-CODE:
-```
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
-
-import { cn } from "@/lib/utils"
-
-const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-      },
-      size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-)
-
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean
-}
-
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
-    )
-  }
-)
-Button.displayName = "Button"
-
-export { Button, buttonVariants }
-```
-HIGHLIGHTS: 
-/const buttonVariants = cva\(/
-/export { Button, buttonVariants }/
-
-CONTENT:
-# 定义内容需求
-
-内容需求关注应用中需要展示的信息类型和质量标准。对于基于此模板的新应用，我们需要考虑以下内容需求：
-
-## 内容类型
-
-1. **文本内容**：
-   - 清晰的界面说明文字
-   - 错误提示和帮助信息
-   - 用户引导内容
-
-2. **视觉元素**：
-   - 图标和插图
-   - 照片和插图
-   - 数据可视化图表
-
-3. **交互元素**：
-   - 表单和输入控件
-   - 按钮和操作项
-   - 导航和菜单
-
-## 内容质量要求
-
-1. **一致性**：所有内容遵循统一的风格指南
-2. **可访问性**：内容对所有用户都可访问，包括残障人士
-3. **响应式**：内容在不同设备上都能良好展示
-4. **本地化**：支持多语言内容显示
-5. **时效性**：内容保持更新，特别是动态数据
-
-## 内容管理策略
-
-1. **静态内容**：直接写入代码或配置文件
-2. **动态内容**：通过API获取或用户生成
-3. **缓存策略**：优化内容加载性能
-4. **版本控制**：跟踪内容变更历史
-
-通过明确定义内容需求，我们可以确保应用不仅功能完善，而且内容丰富、质量高，能够为用户提供有价值的信息。
-----------------------------------------
-TITLE: 导航和功能结构
-DESCRIPTION: 基于用户中心设计模型，学习如何设计应用的导航结构和功能组织
-DIFFICULTY: intermediate
-ESTIMATED_TIME: 25
-PREREQUISITES: 目标用户和功能范围
-TAGS: navigation, structure, user-flow, information-architecture
-
-PROJECT_FILES:
-src/
-src/App.tsx
-src/components/
-src/components/ui/
-src/lib/utils.ts
-package.json
-
-STEPS:
-STEP: 设计信息架构
-FILE: src/App.tsx
-LANGUAGE: typescript
-CODE:
-```
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  HomeIcon, 
-  SettingsIcon, 
-  BarChartIcon, 
-  UsersIcon,
-  SunIcon,
-  MoonIcon
-} from "lucide-react";
-import { useState, useEffect } from "react";
-
-function App() {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  
-  // 检查系统主题偏好
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else if (systemPrefersDark) {
-      setTheme('dark');
-    }
-  }, []);
-  
-  // 应用主题到DOM
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-  
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
-
-}
-```
-HIGHLIGHTS: 
-/import { Button } from "@\/components\/ui\/button";/
-/const \[theme, setTheme\] = useState<'light' \| 'dark'>\('light'\);/
-
-CONTENT:
-# 设计信息架构
-
-信息架构（Information Architecture）是结构层的核心部分，它决定了内容如何组织和用户如何找到所需信息。
-
-## 分析现有结构
-
-在 [src/App.tsx](file:///Users/bondchen/abucode/templates/basic/react-template/src/App.tsx) 中，我们可以看到当前的信息架构包括：
-
-1. **主导航**：
-   - 首页
-   - 文档
-   - 组件
-   - 关于
-
-2. **用户操作**：
-   - 主题切换
-   - 登录/注册
-
-3. **功能区域**：
-   - 特性展示区
-   - 入门指南（使用 Tabs 组件）
-
-## 设计原则
-
-设计信息架构时应遵循以下原则：
-
-1. **用户中心**：以用户需求和行为模式为基础组织信息
-2. **一致性**：在整个应用中保持导航模式的一致
-3. **可扩展性**：为未来功能预留空间
-4. **简洁性**：避免过多层级和复杂结构
-
-## 信息组织方法
-
-1. **层级结构**：通过父子关系组织内容
-2. **分组分类**：将相关功能分组
-3. **标签系统**：使用标签对内容进行多维度分类
-4. **搜索功能**：提供搜索入口帮助用户快速找到内容
-
-对于新应用，建议根据功能相关性组织导航项，确保用户能直观地找到所需功能。
---------------------
-STEP: 设计交互流程
-FILE: src/components/ui/tabs.tsx
-LANGUAGE: typescript
-CODE:
-```
-import * as React from "react"
-import * as TabsPrimitive from "@radix-ui/react-tabs"
-
-import { cn } from "@/lib/utils"
-
-const Tabs = TabsPrimitive.Root
-
-const TabsList = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.List
-    ref={ref}
-    className={cn(
-      "inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
-      className
-    )}
-    {...props}
-  />
-))
-TabsList.displayName = TabsPrimitive.List.displayName
-
-const TabsTrigger = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Trigger
-    ref={ref}
-    className={cn(
-      "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm",
-      className
-    )}
-    {...props}
-  />
-))
-TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
-
-const TabsContent = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Content
-    ref={ref}
-    className={cn(
-      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-      className
-    )}
-    {...props}
-  />
-))
-TabsContent.displayName = TabsPrimitive.Content.displayName
-
-export { Tabs, TabsList, TabsTrigger, TabsContent }
-```
-HIGHLIGHTS: 
-/const Tabs = TabsPrimitive\.Root/
-
-CONTENT:
-# 设计交互流程
-
-交互设计关注用户如何与应用进行交互，以及应用如何响应用户的操作。
-
-## 分析现有交互
-
-模板中使用了多种交互模式：
-
-1. **Tab 导航**：在入门指南部分使用 Tabs 组件，用户可以在不同内容间切换
-2. **主题切换**：通过按钮切换 Light/Dark 模式
-3. **表单交互**：输入框和按钮的组合
-
-## 交互设计原则
-
-1. **可见性**：确保用户能清楚地看到可交互的元素
-2. **反馈**：为用户操作提供即时反馈
-3. **一致性**：保持交互模式在整个应用中的一致性
-4. **简洁性**：避免不必要的复杂交互
-
-## 常见交互模式
-
-1. **导航交互**：
-   - 主导航菜单
-   - 面包屑导航
-   - 分页导航
-
-2. **表单交互**：
-   - 输入验证
-   - 实时反馈
-   - 提交处理
-
-3. **内容交互**：
-   - 展开/收起
-   - 模态框
-   - 下拉菜单
-
-在设计新应用时，应根据功能需求选择合适的交互模式，并确保它们符合用户预期。
---------------------
-STEP: 规划功能结构
-FILE: package.json
-LANGUAGE: json
-CODE:
-```
-{
-  "name": "react-tailwind-shadcn-template",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
+// HIGHLIGHT_CODE_START
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-accordion": "^1.2.12",
@@ -1020,157 +144,499 @@ CODE:
     "zod": "^4.1.8"
   },
   "devDependencies": {
+    "@types/node": "^24.3.3",
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
+    "clsx": "^2.0.0",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "postcss": "^8.4.32",
+    "tailwind-merge": "^2.2.0",
+    "tailwindcss": "^3.4.0",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8"
   }
+//HIGHLIGHT_CODE_END
 }
+
 ```
-HIGHLIGHTS: 
-/"@radix-ui\/react-navigation-menu": "\^1\.2\.14"/
-/"@radix-ui\/react-tabs": "\^1\.1\.13"/
 
 CONTENT:
-# 规划功能结构
+# 安装项目依赖
 
-功能结构定义了应用中各个功能模块的组织方式和相互关系。
+在项目根目录中打开终端，运行以下命令安装所有必需的依赖项：
 
-## 利用现有组件
-
-模板提供了丰富的 UI 组件，可以用于构建功能结构：
-
-1. **导航菜单**：使用 `@radix-ui/react-navigation-menu` 构建主导航
-2. **选项卡**：使用 `@radix-ui/react-tabs` 组织相关内容
-3. **对话框**：使用 `@radix-ui/react-dialog` 展示详细信息或表单
-4. **下拉菜单**：使用 `@radix-ui/react-dropdown-menu` 提供额外选项
-
-## 功能模块规划
-
-根据前一课确定的功能需求，可以规划以下功能模块：
-
-1. **核心功能模块**：
-   - 用户认证（登录/注册）
-   - 主界面/仪表板
-   - 核心业务功能
-
-2. **辅助功能模块**：
-   - 设置/配置
-   - 帮助/文档
-   - 用户反馈
-
-3. **管理功能模块**（如适用）：
-   - 内容管理
-   - 用户管理
-   - 系统监控
-
-## 路由结构设计
-
-对于多页面应用，需要设计合理的路由结构：
-
-```
-/              # 首页/仪表板
-/login         # 登录页
-/register      # 注册页
-/settings      # 设置页
-/help          # 帮助文档
-/profile       # 用户资料
-/features      # 功能展示
+```bash
+npm i
 ```
 
-每个路由应对应一个清晰的功能，避免功能重叠或混淆。路由设计应与导航结构保持一致，确保用户能轻松在不同功能间切换。
+这将根据 [package.json](file://package.json) 中定义的依赖项安装所有包。安装过程可能需要一些时间，具体取决于您的网络速度。
+
+依赖项包括：
+
+### 核心框架和库
+
+- [React](https://react.dev/) 和 [React DOM](https://react.dev/reference/react-dom)：用于构建用户界面的 JavaScript 库。React 使创建交互式 UI 变得轻松，通过组件化的方式构建复杂的界面。
+- [TypeScript](https://www.typescriptlang.org/)：JavaScript 的超集，添加了静态类型定义。它可以帮助在开发阶段捕获错误并提供更好的开发体验。
+
+### 开发工具
+
+- [Vite](https://vitejs.dev/)：下一代前端构建工具，提供快速的冷启动和即时的热模块替换。Vite 使用原生 ES 模块导入来提供闪电般的开发服务器启动速度。
+- [ESLint](https://eslint.org/)：用于识别和报告 JavaScript/TypeScript 代码中的模式的工具，目的是使代码更加一致并避免错误。
+
+### 样式和 UI
+
+- [Tailwind CSS](https://tailwindcss.com/)：一个功能类优先的 CSS 框架，允许您通过组合原子级别的 CSS 类来构建自定义设计，而无需离开 HTML。
+- [Shadcn UI](https://ui.shadcn.com/)：一个可复制粘贴的组件库，提供可定制的 React 组件，使用 Tailwind CSS 进行样式设计。
+- [PostCSS](https://postcss.org/) 和 [Autoprefixer](https://github.com/postcss/autoprefixer)：用于转换 CSS 的工具，Autoprefixer 会自动添加供应商前缀以确保浏览器兼容性。
+
+### 类型定义
+
+- [@types/react](https://www.npmjs.com/package/@types/react) 和 [@types/react-dom](https://www.npmjs.com/package/@types/react-dom)：为 React 和 React DOM 提供 TypeScript 类型定义。
+
+安装完成后，您将在项目目录中看到一个 `node_modules` 文件夹，其中包含了所有安装的依赖包。
+--------------------
+STEP: 启动开发服务器
+FILE: package.json
+LANGUAGE: json
+CODE:
+```
+{
+  "scripts": {
+// HIGHLIGHT_CODE_START
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+// HIGHLIGHT_CODE_END
+  },
+   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "@radix-ui/react-accordion": "^1.2.12",
+    ...
+   }
+}
+```
+
+CONTENT:
+# 启动开发服务器
+
+依赖安装完成后，您可以使用以下命令启动开发服务器：
+
+```bash
+npm run dev
+```
+
+这将启动 Vite 开发服务器，默认情况下可以在 `http://localhost:5173` 访问您的应用。
+
+开发服务器启动后，您将看到类似以下的输出：
+
+```
+  VITE v5.1.6  ready in 185 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://192.168.1.100:5173/
+```
+
+这表示您的开发环境已成功设置，可以开始开发工作了。
+
+### 相关技术链接
+
+- [Vite 官网](https://vitejs.dev/)
+- [React 官网](https://react.dev/)
+- [TypeScript 官网](https://www.typescriptlang.org/)
+- [Tailwind CSS 官网](https://tailwindcss.com/)
+- [Shadcn UI 官网](https://ui.shadcn.com/)
 ----------------------------------------
-TITLE: UI效果设计
-DESCRIPTION: 基于用户中心设计模型，学习如何创建吸引人的用户界面效果
-DIFFICULTY: intermediate
-ESTIMATED_TIME: 25
-PREREQUISITES: 导航和功能结构
-TAGS: ui-design, visual-design, tailwindcss, shadcnui, aesthetics
+TITLE: 部署到函数猫
+DESCRIPTION: 学习如何将本项目部署到 FunctionCat 函数猫
+DIFFICULTY: beginner
+ESTIMATED_TIME: 15
+PREREQUISITES: 搭建本地环境
+TAGS: deployment, functioncat, hosting
+
+PROJECT_FILES:
+functioncat.yaml
+README.md
+
+STEPS:
+STEP: 了解 FunctionCat 部署配置
+FILE: functioncat.yaml
+LANGUAGE: yaml
+CODE:
+```
+system: 1.0.0
+info:
+  name: 基础模板
+  vars: {}
+// HIGHLIGHT_CODE_START
+envs:
+  prod:
+    branch: main
+// HIGHLIGHT_CODE_END
+
+// HIGHLIGHT_CODE_START
+routes:
+  main_env: prod
+  main_app: frontend
+// HIGHLIGHT_CODE_END
+
+apps:
+  frontend:
+// HIGHLIGHT_CODE_START
+    type: web_frontend
+    envs:
+      prod:
+        build:
+          script: npm install; npm run build
+        provision:
+          root_path: dist
+          type: nodejs18x
+// HIGHLIGHT_CODE_END
+```
+
+CONTENT:
+### 部署到函数猫
+
+
+#### 了解 FunctionCat 部署配置
+
+部署配置在 [functioncat.yaml](file://functioncat.yaml) 系统定义文件中。这个文件告诉 FunctionCat 如何构建和部署您的应用。根据 [系统定义文件规范](https://functioncat.cn/docs/terms/system-spec)，配置包含以下关键部分：
+
+- `system`: FunctionCat 配置版本，当前版本为 1.0.0
+- `info`: 系统基本信息，包括名称和环境变量定义
+- `envs`: 环境定义，将 Git 分支映射到部署环境
+- `routes`: 路由配置，定义主环境和主应用
+- `apps`: 应用定义，包括应用类型和环境特定的构建/部署配置
+
+在我们的配置中：
+- `envs.prod.branch`: 一个环境 prod, 对应 main 分支
+- `apps.frontend.type`: 应用类型为 `web_frontend`，表示这是一个前端 Web 应用
+- `apps.frontend.envs.prod.build.script`: 生产环境构建脚本
+- `provision.root_path`: 构建制品目录为 [dist](file://dist)
+
+
+构建脚本包括两个步骤：
+1. `npm install` - 安装依赖
+2. `npm run build` - 构建生产版本
+
+构建产物将放在 [dist](file://dist) 目录中，这是 FunctionCat 将提供服务的目录。
+
+#### 相关链接
+
+- [FunctionCat 函数猫](https://functioncat.cn/): FunctionCat 平台官网
+- [系统定义文件](https://functioncat.cn/docs/terms/system-spec): 了解系统定义文件的作用和用途
+- [应用](https://functioncat.cn/docs/terms/app): 了解 FunctionCat 中应用的概念
+- [环境](https://functioncat.cn/docs/terms/env): 了解 FunctionCat 中环境的概念
+- [部署](https://functioncat.cn/docs/terms/deployment): 了解 FunctionCat 中部署的完整流程
+--------------------
+STEP: 通过克隆模板创建新系统
+FILE: README.md
+LANGUAGE: markdown
+CODE:
+```
+# HIGHLIGHT_CODE_START
+要求：
+1. 需要一个GitHub 或者 Gitee 账号
+2. 会在关联的账号里面创建一个仓库
+3. 系统创建后会自动触发部署
+#HIGHLIGHT_CODE_END
+```
+
+CONTENT:
+### 在 FunctionCat 上部署系统
+
+FunctionCat 提供了第一种创建系统的方式是通过模板部署。
+
+
+这是最简单的部署方式，适合快速开始：
+
+1. 浏览[模板库](https://functioncat.cn/templates)并选择合适的模板
+2. 点击"部署"按钮，按照提示操作
+3. 部署完成后，通过系统 URL 访问您的应用
+
+
+### 相关链接
+
+- [快速体验](https://functioncat.cn/docs/quick-start): FunctionCat 平台快速上手指南
+- [项目](https://functioncat.cn/docs/terms/project): 了解 FunctionCat 中项目的作用
+--------------------
+STEP: 通过 Git 仓库创建新系统
+FILE: README.md
+LANGUAGE: json
+CODE:
+```
+HIGHLIGHT_CODE_START
+要求：
+1. 先克隆模板仓库到你自己的仓库
+HIGHLIGHT_CODE_END
+```
+
+CONTENT:
+### 通过 Git 仓库部署
+
+这种方式更适合持续开发和部署：
+
+1. [创建系统](https://functioncat.cn/console/)：
+   - 点击创建系统
+   - 输入系统名称、系统标识和系统描述
+   - [连接 Git 账号](https://functioncat.cn/docs/operations/select-git-owner)并选择仓库
+   - 选择初始部署的分支
+
+2. FunctionCat 将自动：
+   - 克隆您的代码
+   - 运行流水线部署
+
+3. 部署完成后，您将获得一个 FunctionCat函数猫 提供的 系统 URL，您的应用就可以通过这个 URL 访问了。
+
+###相关链接
+- [创建系统](https://functioncat.cn/docs/operations/create-system): 了解如何创建新系统
+
+--------------------
+STEP: 新改动自动部署
+FILE: README.md
+LANGUAGE: bash
+CODE:
+```
+HIGHLIGHT_CODE_START
+git add -A 
+git commit -m "变动内容描述"
+git push origin main
+HIGHLIGHT_CODE_END
+```
+CONTENT:
+
+### 提交改动对应的分支
+
+### 自动化部署
+ 1. Gitee webhook
+  - 在创建系统的时候，会给系统的项目仓库创建一个 webhook，用于监听代码的更新。
+  - 当有代码更新的时候，FunctionCat会收到通知并触发新的流水线运行。
+ 2. Github webhook
+  - 通过 Github App 已经授权 FunctionCat函数猫通过 webhook 监听代码更新。
+  - 当有代码更新的时候，FunctionCat会收到通知并触发新的流水线运行。
+
+当您将代码推送到 Git 仓库后，FunctionCat 平台会自动检测到代码变更并触发[流水线](https://functioncat.cn/docs/terms/pipeline)执行新的部署。您可以在控制台的流水线页面查看部署进度和状态。
+
+### 相关链接
+- [流水线](https://functioncat.cn/docs/terms/pipeline): 了解自动化部署流水线
+
+----------------------------------------
+TITLE: 项目结构介绍
+DESCRIPTION: 深入了解本模板的项目结构和各个文件的作用
+DIFFICULTY: beginner
+ESTIMATED_TIME: 20
+PREREQUISITES: 搭建本地环境
+TAGS: project-structure, file-organization, architecture
 
 PROJECT_FILES:
 src/
-src/App.tsx
-src/index.css
+src/assets/
 src/components/
 src/components/ui/
-src/lib/utils.ts
-tailwind.config.js
+src/lib/
+src/App.tsx
+src/main.tsx
+src/index.css
 components.json
+tailwind.config.js
+postcss.config.js
+vite.config.ts
+tsconfig.json
+package.json
 
 STEPS:
-STEP: 设计视觉层次
+STEP: 主要目录和文件概览
+FILE: README.md
+LANGUAGE: markdown
+CODE:
+```
+// HIGHLIGHT_CODE_START
+├── src/
+│   ├── assets/           # 静态资源
+│   ├── components/       # React 组件
+│   │   └── ui/           # ShadcnUI 组件
+│   ├── lib/              # 工具函数
+│   ├── App.tsx           # 主应用组件
+│   ├── main.tsx          # 入口文件
+│   └── index.css         # 全局样式
+├── components.json       # ShadcnUI 配置
+├── tailwind.config.js    # TailwindCSS 配置
+├── postcss.config.js     # PostCSS 配置
+├── vite.config.ts        # Vite 配置
+├── tsconfig.json         # TypeScript 配置
+└── package.json          # 依赖和脚本
+// HIGHLIGHT_CODE_END
+```
+
+CONTENT:
+### 核心技术栈
+- 📦 [React](https://reactjs.org/) - 框架
+- ⚡️ [Vite](https://vitejs.dev/) - 高效的前端构建工具
+- 💎 [TypeScript](https://www.typescriptlang.org/) - JavaScript 的超集，添加静态类型检查
+- 🎨 [TailwindCSS](https://tailwindcss.com/) - 实用优先的 CSS 框架
+- 🎨 [ShadcnUI](https://ui.shadcn.com/) - 基于 TailwindCSS 的可复制粘贴组件库
+
+### 核心目录
+
+- [src/](file://src): 包含所有源代码
+  - [assets/](file://src/assets): 静态资源文件，如图片、字体等
+  - [components/](file://src/components): React 组件
+    - [ui/](file://src/components/ui): ShadcnUI 预构建组件
+  - [lib/](file://src/lib): 工具函数和辅助代码
+- [src/App.tsx](file://src/App.tsx): 主应用组件
+- [src/main.tsx](file://src/main.tsx): 应用入口文件
+- [src/index.css](file://src/index.css): 全局样式文件
+
+### 配置文件
+
+- [components.json](file://components.json): ShadcnUI 组件配置
+- [tailwind.config.js](file://tailwind.config.js): TailwindCSS 配置文件
+- [postcss.config.js](file://postcss.config.js): PostCSS 配置文件
+- [vite.config.ts](file://vite.config.ts): Vite 构建工具配置
+- [tsconfig.json](file://tsconfig.json): TypeScript 配置文件
+- [package.json](file://package.json): 项目依赖和脚本配置
+--------------------
+STEP: 主应用组件
+FILE: src/App.tsx
+LANGUAGE: typescript
+CODE:
+```
+// HIGHLIGHT_CODE_START
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { 
+  HomeIcon, 
+  SettingsIcon, 
+  BarChartIcon, 
+  UsersIcon,
+  SunIcon,
+  MoonIcon
+} from "lucide-react";
+import { useState, useEffect } from "react";
+// HIGHLIGHT_CODE_END
+
+export function App() {
+// HIGHLIGHT_CODE_START
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  
+  // 检查系统主题偏好
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else if (systemPrefersDark) {
+      setTheme('dark');
+    }
+  }, []);
+  
+  // 应用主题到DOM
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+  
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+// HIGHLIGHT_CODE_END
+
+  return (
+    <div className="min-h-screen bg-background">
+    ...
+    </div>
+  );
+}
+
+export default App;
+```
+
+CONTENT:
+### 主应用组件
+
+[src/App.tsx](file://src/App.tsx) 是主应用组件，它展示了应用的主要界面。从代码中可以看到：
+
+1. **组件导入**：导入了多个 ShadcnUI 组件，如 Button、Card、Input、Tabs 等，这些组件基于 TailwindCSS 构建
+2. **图标使用**：使用 lucide-react 图标库提供的图标组件，如 HomeIcon、SettingsIcon 等
+3. **主题切换功能**：实现了 light/dark 模式切换，使用 useState 和 useEffect 管理状态和副作用
+4. **本地存储**：使用 localStorage 保存用户的主题偏好设置
+5. **响应式设计**：使用 TailwindCSS 的响应式类（如 md:grid-cols-2, lg:grid-cols-4）实现响应式布局
+
+--------------------
+STEP: 应用入口文件
+FILE: src/main.tsx
+LANGUAGE: typescript
+CODE:
+```
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.tsx'
+import './index.css'
+
+// HIGHLIGHT_CODE_START
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+// HIGHLIGHT_CODE_END
+```
+
+CONTENT:
+### 应用入口文件
+
+[src/main.tsx](file://src/main.tsx) 是应用入口文件，负责渲染根组件到 DOM。
+
+该文件的关键点：
+1. **React 18 渲染方式**：使用 `ReactDOM.createRoot` 方法，这是 React 18 的新渲染 API
+2. **严格模式**：使用 `<React.StrictMode>` 包裹应用，有助于在开发过程中发现潜在问题
+3. **样式导入**：导入全局样式文件 [index.css](file://src/index.css)
+4. **组件挂载**：将 [App.tsx](file://src/App.tsx) 组件渲染到 id 为 'root' 的 DOM 元素中
+
+这是标准的 React 应用入口文件结构，确保应用能正确启动和运行。
+--------------------
+STEP: 全局样式文件
 FILE: src/index.css
 LANGUAGE: css
 CODE:
 ```
+// HIGHLIGHT_CODE_START
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+// HIGHLIGHT_CODE_END
 
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 47.4% 11.2%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 47.4% 11.2%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 47.4% 11.2%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 210 40% 98%;
-
-    --ring: 215 20.2% 65.1%;
-
-    --radius: 0.5rem;
+    ...
   }
 
   .dark {
     --background: 224 71% 4%;
     --foreground: 213 31% 91%;
 
-    --muted: 223 47% 11%;
-    --muted-foreground: 215.4 16.3% 56.9%;
-
-    --accent: 216 34% 17%;
-    --accent-foreground: 210 40% 98%;
-
-    --popover: 224 71% 4%;
-    --popover-foreground: 215 20.2% 65.1%;
-
-    --border: 216 34% 17%;
-    --input: 216 34% 17%;
-
-    --card: 224 71% 4%;
-    --card-foreground: 213 31% 91%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 1.2%;
-
-    --secondary: 222.2 47.4% 11.2%;
-    --secondary-foreground: 210 40% 98%;
-
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-
-    --ring: 216 34% 17%;
-
-    --radius: 0.5rem;
+    ...
   }
 }
 
+// HIGHLIGHT_CODE_START
 @layer base {
   * {
     @apply border-border;
@@ -1180,166 +646,120 @@ CODE:
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
-```
-HIGHLIGHTS: 
 
-/--primary: 222\.2 47\.4% 11\.2%;/
+// HIGHLIGHT_CODE_END
+```
 
 CONTENT:
-# 设计视觉层次
+### 全局样式文件
 
-视觉层次是表现层的核心，它决定了用户界面的外观和感觉。通过合理运用颜色、字体、间距等元素，可以引导用户的注意力并提升用户体验。
+[src/index.css](file://src/index.css) 包含全局样式和主题变量定义。
 
-## 颜色系统
+该文件的关键点：
+1. **TailwindCSS 指令**：包含 `@tailwind base;`、`@tailwind components;` 和 `@tailwind utilities;` 指令，这是 TailwindCSS 工作的基础
+2. **CSS 变量定义**：定义了大量 CSS 变量（以 `--` 开头），用于实现 light 和 dark 主题
+3. **主题支持**：通过 `:root`（默认主题）和 `.dark`（暗色主题）选择器定义不同的颜色变量
+4. **基础样式**：使用 `@layer base` 定义基础样式，如全局边框和 body 样式
+5. **字体特性**：设置 `font-feature-settings` 以优化字体显示效果
 
-模板提供了完整的颜色系统，包括：
-
-1. **基础颜色**：
-   - `--background` 和 `--foreground`：页面背景和前景色
-   - `--primary` 和 `--primary-foreground`：主要操作颜色
-   - `--secondary` 和 `--secondary-foreground`：次要操作颜色
-   - `--muted` 和 `--muted-foreground`：弱化内容颜色
-
-2. **功能颜色**：
-   - `--destructive`：危险操作颜色（如删除）
-   - `--success`：成功状态颜色
-   - `--warning`：警告状态颜色
-
-3. **组件颜色**：
-   - `--card`：卡片组件背景色
-   - `--popover`：弹出框背景色
-   - `--border`：边框颜色
-   - `--input`：输入框颜色
-
-## 字体和排版
-
-良好的排版能显著提升界面的可读性和美观度：
-
-1. **字体选择**：选择易读且符合品牌调性的字体
-2. **字号层次**：建立清晰的标题、副标题、正文层次
-3. **行高和间距**：确保文字有足够的呼吸空间
-4. **字重对比**：通过字重区分内容重要性
-
-## 视觉层次原则
-
-1. **对比原则**：通过颜色、大小、形状等创造对比
-2. **重复原则**：重复使用相同的设计元素建立一致性
-3. **对齐原则**：保持元素的对齐以创造秩序感
-4. **亲密性原则**：相关元素靠近，无关元素分离
-
-合理运用这些原则可以创建出既美观又易用的用户界面。
+这些样式定义为整个应用提供了一致的视觉风格和主题支持，是 TailwindCSS 和 ShadcnUI 正常工作的基础。
 --------------------
-STEP: 创建交互反馈效果
-FILE: src/components/ui/button.tsx
-LANGUAGE: typescript
+STEP: 组件目录
+FILE: src/components/
+LANGUAGE: directory
 CODE:
 ```
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
-
-import { cn } from "@/lib/utils"
-
-const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-      },
-      size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-)
-
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean
-}
-
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
-    )
-  }
-)
-Button.displayName = "Button"
-
-export { Button, buttonVariants }
+src/
+└── components/
+    ├── ui/                 # ShadcnUI 组件
+    └── (自定义组件)         # 项目特定组件
 ```
-HIGHLIGHTS: 
-/"inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors/
-/hover:bg-primary\/90/
-/disabled:pointer-events-none disabled:opacity-50/
 
 CONTENT:
-# 创建交互反馈效果
+### 组件目录
 
-交互反馈是提升用户体验的重要手段，它让用户知道他们的操作已被系统接收并正在处理。
+[components/](file://src/components) 目录用于存放项目自定义组件。
 
-## 按钮状态反馈
+该目录的组织方式：
+1. **ui 子目录**：包含所有 ShadcnUI 预构建组件
+2. **自定义组件**：项目特定的业务组件将存放在此目录或其子目录中
 
-在 [Button](file:///Users/bondchen/abucode/templates/basic/react-template/src/components/ui/button.tsx#L57-L67) 组件中，我们可以看到多种状态反馈：
-
-1. **默认状态**：按钮的正常显示状态
-2. **悬停状态**：`hover:` 前缀定义了鼠标悬停时的样式变化
-3. **焦点状态**：`focus-visible:` 前缀定义了获得焦点时的样式
-4. **禁用状态**：`disabled:` 前缀定义了禁用时的样式
-
-这些状态反馈让用户清楚地知道按钮的当前状态和可进行的操作。
-
-## 动画和过渡
-
-模板使用了多种动画和过渡效果：
-
-1. **颜色过渡**：`transition-colors` 实现颜色变化的平滑过渡
-2. **关键帧动画**：在 [tailwind.config.js](file:///Users/bondchen/abucode/templates/basic/react-template/tailwind.config.js) 中定义的自定义动画
-3. **组件动画**：如手风琴、模态框等组件的展开收起动画
-
-## 视觉反馈类型
-
-1. **即时反馈**：按钮点击、表单验证等立即响应
-2. **状态反馈**：加载状态、成功/失败状态等
-3. **进度反馈**：进度条、加载指示器等
-4. **引导反馈**：工具提示、引导步骤等
-
-良好的视觉反馈应该：
-- 及时且准确
-- 与用户操作相关
-- 不干扰主要任务
-- 符合用户预期
+这种结构有助于：
+- 分离第三方组件和自定义组件
+- 保持代码组织清晰
+- 便于组件的查找和维护
 --------------------
-STEP: 实现响应式设计
+STEP: UI组件目录
+FILE: src/components/ui/
+LANGUAGE: directory
+CODE:
+```
+src/
+└── components/
+    └── ui/
+        ├── button.tsx
+        ├── card.tsx
+        ├── input.tsx
+        ├── label.tsx
+        ├── tabs.tsx
+        └── ... (其他 ShadcnUI 组件)
+```
+
+CONTENT:
+### UI组件目录
+
+[components/ui/](file://src/components/ui) 目录包含所有 ShadcnUI 预构建组件，这些组件可以按需添加和使用。
+
+ShadcnUI 组件的特点：
+1. **可复制粘贴**：组件代码可以直接复制到项目中，便于定制
+2. **基于 TailwindCSS**：所有样式都使用 TailwindCSS 类实现
+3. **高度可定制**：可以通过修改组件代码来满足特定需求
+4. **TypeScript 支持**：提供完整的类型定义
+
+常用的组件包括：
+- [button.tsx](file://src/components/ui/button.tsx)：按钮组件
+- [card.tsx](file://src/components/ui/card.tsx)：卡片组件
+- [input.tsx](file://src/components/ui/input.tsx)：输入框组件
+- [tabs.tsx](file://src/components/ui/tabs.tsx)：选项卡组件
+
+这些组件在 [App.tsx](file://src/App.tsx) 中被使用，构成了应用的 UI 界面。
+--------------------
+STEP: 工具函数目录
+FILE: src/lib/
+LANGUAGE: directory
+CODE:
+```
+src/
+└── lib/
+    └── utils.ts          # 工具函数
+```
+
+CONTENT:
+### 工具函数目录
+
+[lib/](file://src/lib) 目录用于存放工具函数和辅助代码，例如格式化函数、API 调用封装等。
+
+该目录的作用：
+1. **代码复用**：存放可在项目多处使用的工具函数
+2. **功能封装**：将复杂逻辑封装成简单的函数接口
+3. **便于测试**：工具函数通常易于单元测试
+4. **逻辑分离**：将业务逻辑与 UI 逻辑分离
+
+典型的工具函数可能包括：
+- 字符串处理函数
+- 数字格式化函数
+- 日期处理函数
+- API 请求封装
+- 状态管理辅助函数
+--------------------
+STEP: TailwindCSS配置文件
 FILE: tailwind.config.js
 LANGUAGE: javascript
 CODE:
 ```
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+// HIGHLIGHT_CODE_START
   darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
@@ -1347,7 +767,9 @@ module.exports = {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
   ],
+// HIGHLIGHT_CODE_END
   prefix: "",
+// HIGHLIGHT_CODE_START
   theme: {
     container: {
       center: true,
@@ -1414,63 +836,966 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
+// HIGHLIGHT_CODE_END
 }
 ```
-HIGHLIGHTS: 
-/"1400px"/
 
 CONTENT:
-# 实现响应式设计
+### TailwindCSS配置文件
 
-响应式设计确保应用在各种设备和屏幕尺寸上都能提供良好的用户体验。
+[tailwind.config.js](file://tailwind.config.js) 是 TailwindCSS 的配置文件，决定了 TailwindCSS 的行为和扩展。
 
-## 断点系统
+配置的关键点：
 
-TailwindCSS 提供了默认的断点系统：
+1. **暗色模式支持**：
+   - `darkMode: ["class"]` 启用基于 CSS 类的暗色主题支持
+   - 通过添加/移除 `dark` 类来切换主题
 
-- `sm`: 640px
-- `md`: 768px
-- `lg`: 1024px
-- `xl`: 1280px
-- `2xl`: 1536px
+2. **内容扫描路径**：
+   - `content` 数组指定了需要扫描的文件，Tailwind 将从这些文件中提取使用的类名
+   - 包括了项目中的所有 ts/tsx 文件
 
-模板在 [tailwind.config.js](file:///Users/bondchen/abucode/templates/basic/react-template/tailwind.config.js) 中自定义了容器设置，最大宽度为 1400px。
+3. **主题扩展**：
+   - `theme.extend` 扩展了默认主题
+   - 使用 HSL 颜色值与 [index.css](file://src/index.css) 中定义的 CSS 变量配合
+   - 定义了圆角、动画等样式属性
 
-## 响应式设计策略
+4. **插件**：
+   - 使用 `tailwindcss-animate` 插件提供预定义动画
 
-1. **移动优先**：从最小屏幕开始设计，逐步增强到大屏幕
-2. **弹性布局**：使用 Flexbox 和 Grid 创建弹性布局
-3. **相对单位**：使用 rem、em、% 等相对单位而非固定像素
-4. **媒体查询**：通过 Tailwind 的断点前缀应用不同样式
+这些配置使 TailwindCSS 能够与 ShadcnUI 和项目的主题系统完美配合。
+--------------------
+STEP: PostCSS配置文件
+FILE: postcss.config.js
+LANGUAGE: javascript
+CODE:
+```
+module.exports = {
+// HIGHLIGHT_CODE_START
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  }
+// HIGHLIGHT_CODE_END
+}
+```
 
-## 响应式组件设计
+CONTENT:
+### PostCSS配置文件
 
-1. **自适应网格**：
-   ```tsx
-   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-     {/* 内容项 */}
-   </div>
-   ```
+[postcss.config.js](file://postcss.config.js) 配置了 PostCSS 插件，主要用于处理 TailwindCSS。
 
-2. **隐藏/显示元素**：
-   ```tsx
-   <div className="hidden md:block">
-     {/* 仅在中等及以上屏幕显示 */}
-   </div>
-   ```
+配置说明：
+1. **tailwindcss 插件**：处理 TailwindCSS 相关的样式生成
+2. **autoprefixer 插件**：自动添加浏览器厂商前缀，确保样式在不同浏览器中的兼容性
 
-3. **调整字体大小**：
-   ```tsx
-   <h1 className="text-lg sm:text-xl md:text-2xl">
-     响应式标题
-   </h1>
-   ```
+这是使用 TailwindCSS 项目的标准配置，确保样式能正确处理和优化。
+--------------------
+STEP: Vite配置文件
+FILE: vite.config.ts
+LANGUAGE: typescript
+CODE:
+```
+import path from "path"
+import react from "@vitejs/plugin-react"
+import { defineConfig } from "vite"
 
-## 响应式设计原则
+export default defineConfig({
+// HIGHLIGHT_CODE_START
+  plugins: [react()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+// HIGHLIGHT_CODE_END
+})
+```
 
-1. **内容优先**：确保核心内容在所有设备上都可访问
-2. **触摸友好**：在移动设备上提供足够大的触摸目标
-3. **性能优化**：在移动设备上优化图片和资源加载
-4. **一致体验**：在不同设备上保持一致的用户体验
+CONTENT:
+### Vite配置文件
 
-通过合理运用响应式设计，可以确保应用在桌面、平板和手机等各种设备上都能提供优秀的用户体验。
+[vite.config.ts](file://vite.config.ts) 配置了 Vite 构建工具，包括路径别名、插件等。
+
+配置的关键点：
+1. **React 插件**：使用 `@vitejs/plugin-react` 支持 React 和 JSX
+2. **路径别名**：配置 `@` 别名指向 [src/](file://src) 目录，便于导入
+   - 例如：`import { Button } from "@/components/ui/button"` 中的 `@` 就是这个别名
+3. **TypeScript 支持**：使用 TypeScript 编写配置文件
+
+这个配置确保了项目能正确使用 React 和 TypeScript，并提供了便捷的路径别名功能。
+--------------------
+STEP: TypeScript配置文件
+FILE: tsconfig.json
+LANGUAGE: json
+CODE:
+```
+{
+  "compilerOptions": {
+// HIGHLIGHT_CODE_START
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Path aliases */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+// HIGHLIGHT_CODE_END
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
+```
+
+CONTENT:
+### TypeScript配置文件
+
+[tsconfig.json](file://tsconfig.json) 配置了 TypeScript 编译选项。
+
+配置的关键点：
+
+1. **编译目标**：
+   - `target: "ES2020"` 设置编译目标为 ES2020
+   - `lib` 指定包含的库文件
+
+2. **模块系统**：
+   - `module: "ESNext"` 使用 ES 模块系统
+   - `moduleResolution: "bundler"` 使用 bundler 模块解析策略
+
+3. **路径映射**：
+   - `paths` 配置与 [vite.config.ts](file://vite.config.ts) 中一致的路径别名
+
+4. **严格模式**：
+   - `strict: true` 启用所有严格类型检查选项
+   - 启用各种 linting 选项，如 `noUnusedLocals`、`noUnusedParameters` 等
+
+5. **其他选项**：
+   - `noEmit: true` 表示只进行类型检查，不生成 JavaScript 文件（由 Vite 处理）
+   - `include: ["src"]` 指定包含的文件目录
+
+这些配置确保了项目有良好的 TypeScript 支持和类型安全。
+--------------------
+STEP: ShadcnUI组件配置文件
+FILE: components.json
+LANGUAGE: json
+CODE:
+```
+{
+// HIGHLIGHT_CODE_START
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "tailwind.config.js",
+    "css": "src/index.css",
+    "baseColor": "slate",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils"
+  }
+// HIGHLIGHT_CODE_END
+}
+```
+
+CONTENT:
+### ShadcnUI组件配置文件
+
+[components.json](file://components.json) 是 ShadcnUI 的配置文件，定义了组件的安装路径和样式配置。
+
+配置的关键点：
+
+1. **样式和框架设置**：
+   - `style: "default"` 使用默认样式
+   - `tsx: true` 使用 TypeScript 和 JSX
+   - `rsc: false` 不使用 React Server Components
+
+2. **TailwindCSS 集成**：
+   - `tailwind.config` 指向 Tailwind 配置文件
+   - `css` 指向 CSS 文件
+   - `baseColor: "slate"` 使用 slate 作为基础颜色
+   - `cssVariables: true` 使用 CSS 变量
+
+3. **路径别名**：
+   - `aliases.components` 指向组件目录
+   - `aliases.utils` 指向工具函数文件
+
+这个配置文件确保了 ShadcnUI 组件能正确集成到项目中，并与 TailwindCSS 和项目的路径别名系统配合工作。
+
+----------------------------------------
+TITLE: 目标用户和功能范围
+DESCRIPTION: 基于用户中心设计模型，学习如何定义新应用的目标用户和功能范围
+DIFFICULTY: intermediate
+ESTIMATED_TIME: 20
+PREREQUISITES: 项目结构介绍
+TAGS: user-centered-design, scope, requirements, planning
+
+PROJECT_FILES:
+src/
+src/components/
+src/components/ui/
+src/lib/utils.ts
+package.json
+README.md
+spec.md
+
+STEPS:
+STEP: 确定目标用户群体
+FILE: spec.md
+LANGUAGE: md
+CODE:
+```
+# 系统
+
+## 目标用户
+
+### 特征
+
+- 性别
+- 年龄
+- 地理位置
+- 技能
+- 等
+
+### 场景
+
+#### 场景1
+
+- 用户在一个什么情景下 (context or situation)
+- 遇到了什么问题
+- 用户期望的结果是什么
+- 这个系统提供了什么解决方案
+
+#### 场景2
+```
+
+CONTENT:
+# 确定目标用户群体
+
+在开始构建新应用之前，首先要明确目标用户群体。这将直接影响后续的功能设计和用户体验决策。
+
+## 用户画像分析
+
+当使用此模板开发应用时，最终用户可能包括各种类型的人员，具体取决于所构建的应用类型。例如，如果构建的是任务管理应用，目标用户可能是：
+
+1. **职场人士**：需要管理日常工作和项目任务
+2. **学生**：需要安排学习计划和作业 deadline
+3. **自由职业者**：需要跟踪多个客户项目和任务
+4. **团队协作人员**：需要与同事协作完成任务
+
+## 用户需求分析
+
+不同用户群体有不同的需求：
+
+- **个人用户**需要：简单易用的界面、快速的任务录入、清晰的任务视图
+- **专业用户**需要：高级功能如项目管理、时间跟踪、数据导出
+- **团队用户**需要：协作功能、权限管理、实时同步
+- **移动用户**需要：响应式设计、离线功能、快速访问
+
+了解这些最终用户需求有助于我们确定应用的功能范围和优先级。
+
+--------------------
+STEP: 定义功能范围
+FILE: spec.md
+LANGUAGE: md
+CODE:
+```
+# 系统
+
+## 目标用户
+
+### 特征
+
+- 性别
+- 年龄
+- 地理位置
+- 技能
+- 等
+
+### 场景
+
+#### 场景1
+
+- 用户在一个什么情景下 (context or situation)
+- 遇到了什么问题
+- 用户期望的结果是什么
+- 这个系统提供了什么解决方案
+
+#### 场景2
+
+## 功能范围
+
+> 对解决解决方案进行实现，描述系统功能范围，包含哪些功能，以及不包含哪些功能。
+
+### 包含
+
+1. 核心功能1
+   - 子功能1
+   - 子功能2
+2. 核心功能2
+   - 子功能1
+   - 子功能2
+
+### 不包括
+
+1. 范围1
+   - 子范围1
+   - 子范围2
+2. 范围2
+   - 子范围1
+   - 子范围2
+```
+
+CONTENT:
+# 定义功能范围
+
+定义功能范围是项目规划阶段的关键步骤，它有助于确保开发团队专注于最重要的功能，避免范围蔓延。功能范围应该基于之前确定的目标用户需求来制定。
+
+## 如何定义功能范围
+
+定义功能范围时，应该遵循以下步骤：
+
+1. **基于用户需求**：回顾之前分析的目标用户特征和使用场景，确保每个功能都服务于用户的核心需求。
+
+2. **区分核心功能和扩展功能**：
+   - 核心功能：没有这些功能，应用就无法实现其基本价值
+   - 扩展功能：增强用户体验但不是必需的
+
+3. **明确包含和不包含的内容**：清晰地定义什么在范围内，什么不在范围内，有助于管理期望和资源分配。
+
+4. **考虑技术可行性**：评估团队的技术能力和时间限制，确保所定义的功能范围是可实现的。
+
+5. **优先级排序**：为功能设置优先级，确保最重要的功能优先开发。
+
+## 任务管理系统核心功能需求
+
+基于之前的目标用户分析，我们定义任务管理系统的核心功能：
+
+1. **任务管理**：
+   - 创建、编辑、删除任务
+   - 设置任务优先级和截止日期
+   - 标记任务完成状态
+
+2. **任务分类**：
+   - 按项目或标签对任务进行分组
+   - 创建自定义分类
+
+## 扩展功能需求
+
+以下功能可以在核心功能完成后再考虑实现：
+
+1. **协作功能**：与团队成员共享任务和项目
+2. **提醒功能**：设置任务提醒和通知
+3. **数据统计**：任务完成情况的统计和分析
+4. **日历视图**：以日历形式查看任务安排
+5. **文件附件**：为任务添加附件
+
+## 明确排除的功能
+
+为了避免功能蔓延和资源分散，明确以下功能不在当前版本范围内：
+
+1. **复杂项目管理**：
+   - 甘特图
+   - 资源分配
+   
+2. **高级报告功能**：
+   - 自定义报告
+   - 导出为多种格式
+
+通过明确的功能范围定义，我们可以确保开发工作聚焦于为用户提供核心价值，同时为未来的功能扩展预留空间。
+
+--------------------
+STEP: 定义核心概念及相互关系
+FILE: spec.md
+LANGUAGE: md
+CODE:
+```
+# 系统
+
+## 目标用户
+
+### 特征
+
+- 性别
+- 年龄
+- 地理位置
+- 技能
+- 等
+
+### 场景
+
+#### 场景1
+
+- 用户在一个什么情景下 (context or situation)
+- 遇到了什么问题
+- 用户期望的结果是什么
+- 这个系统提供了什么解决方案
+
+#### 场景2
+
+## 功能范围
+
+> 对解决解决方案进行实现，描述系统功能范围，包含哪些功能，以及不包含哪些功能。
+
+### 包含
+
+1. 核心功能1
+   - 子功能1
+   - 子功能2
+2. 核心功能2
+   - 子功能1
+   - 子功能2
+
+### 不包括
+
+1. 范围1
+   - 子范围1
+   - 子范围2
+2. 范围2
+   - 子范围1
+   - 子范围2
+
+## 核心概念及相互关系
+
+### 概念1 (Concept1)
+
+- 属性1
+- 属性2
+- 属性3
+- 操作1
+- 操作2
+
+### 概念2 (Concept2)
+
+- 属性1
+- 属性2
+- 属性3
+- 操作1
+- 操作2
+
+### 概念间关系
+
+- 概念1与概念2的关系：关系描述
+- 概念2与概念3的关系：关系描述
+- 概念1与概念3的关系：关系描述
+```
+
+CONTENT:
+# 定义核心概念及相互关系
+
+在设计任务管理系统时，我们需要识别核心概念及其关系。这些概念代表了应用中的关键资源，而操作则定义了用户可以对这些资源执行的动作。
+
+## 任务管理系统的核心概念说明
+
+1. **任务 (Task)**：任务是系统中的基本单位
+   - 任务是系统中用户需要完成的工作项
+   - 任务是任务管理系统的核心，所有功能都围绕任务展开
+   - 典型使用场景包括创建待办事项、设置截止日期、标记完成等
+
+2. **项目 (Project)**：项目是任务的集合
+   - 项目是系统中用于组织和分组相关任务的容器
+   - 项目帮助用户更好地组织和管理大量任务
+   - 典型使用场景包括为工作项目、学习课程或生活目标创建独立的项目空间
+
+3. **标签 (Tag)**：标签用于分类和标记任务
+   - 标签是系统中用于灵活分类任务的机制
+   - 标签提供了一种多维度组织任务的方式
+   - 典型使用场景包括为任务添加优先级标签、类型标签或自定义标签
+
+## 概念间的关系
+
+- 任务与项目的关系：一个项目可以包含多个任务，一个任务只能属于一个项目
+- 任务与标签的关系：一个任务可以有多个标签，一个标签可以应用于多个任务
+- 项目与标签的关系：项目和标签之间没有直接关系，但可以通过任务产生间接关联
+
+这种概念驱动的设计方法有助于我们构建清晰的数据模型和API结构，而不被具体的UI实现细节所干扰。它为后续的数据库设计、API开发和状态管理提供了坚实的基础。
+
+## 概念驱动设计的优势
+
+概念驱动的设计方法具有以下优势：
+
+1. **数据模型清晰**：基于核心概念构建的数据模型更容易理解和维护
+2. **API设计合理**：围绕概念和操作设计的API更加直观和一致
+3. **状态管理简化**：明确的概念边界有助于更好地管理应用状态
+4. **功能扩展有序**：当需要添加新功能时，可以基于现有概念进行扩展
+
+通过这种概念驱动的设计方法，我们为任务管理系统构建了一个坚实的基础，确保后续开发工作能够围绕核心概念展开，避免功能蔓延和设计混乱.
+
+----------------------------------------
+TITLE: 导航和用户旅途设计
+DESCRIPTION: 学习如何设计任务管理系统的UI导航结构和关键用户旅途
+DIFFICULTY: intermediate
+ESTIMATED_TIME: 25
+PREREQUISITES: 目标用户和功能范围
+TAGS: navigation, user-journey, ui-structure, user-experience, task-management
+
+PROJECT_FILES:
+src/
+src/App.tsx
+src/components/
+src/components/ui/
+spec.md
+package.json
+
+STEPS:
+STEP: 设计UI导航结构
+FILE: spec.md
+LANGUAGE: md
+CODE:
+```
+# 系统
+
+## 目标用户
+
+...
+HIGHLIGHT_CODE_START
+
+## UI导航结构
+
+### 主导航栏
+
+- 导航项1
+- 导航项2
+- 导航项3
+- 用户操作区域
+  - 主题切换
+  - 用户菜单
+
+### 侧边栏（可选）
+
+- 分类筛选
+- 标签筛选
+- 项目分组
+
+### 底部导航（移动端）
+
+- 导航项1
+- 导航项2
+- 导航项3
+
+HIGHLIGHT_CODE_END
+```
+
+CONTENT:
+# 设计UI导航结构
+
+UI导航结构是用户与任务管理系统交互的基础框架。一个清晰、直观的导航结构能够帮助用户快速找到所需功能，提高使用效率。
+
+## 任务管理系统的导航组件
+
+任务管理系统的导航结构通常包含以下几个主要组件：
+
+1. **主导航栏**：位于页面顶部，包含主要功能入口
+2. **侧边栏**：可选组件，通常用于筛选和分类功能
+3. **底部导航**：移动端专用，提供核心功能的快速访问
+
+## 主导航栏设计
+
+主导航栏是用户访问系统核心功能的主要入口。对于任务管理系统，建议包含以下导航项：
+
+- **任务面板**：用户查看和管理任务的主要界面
+- **统计图表**：展示任务完成情况和统计数据
+- **搜索功能**：快速查找特定任务
+- **用户设置**：访问个人设置和账户信息
+
+在用户操作区域，通常放置主题切换按钮和用户菜单，方便用户进行个性化设置和账户管理。
+
+## 侧边栏设计
+
+侧边栏提供更精细的任务筛选和分类功能，包括：
+
+- **任务分类筛选**：按状态（全部、待办、已完成、重要）筛选任务
+- **标签筛选**：按用户自定义标签筛选任务
+- **项目分组**：按项目对任务进行分组显示
+
+## 移动端底部导航
+
+在移动设备上，底部导航栏提供核心功能的快速访问：
+
+- **主页**：返回任务主面板
+- **统计**：查看任务统计数据
+- **设置**：访问系统设置
+
+## 导航设计原则
+
+设计导航结构时应遵循以下原则：
+
+1. **直观性**：导航项应清晰表达其功能，用户能快速理解
+2. **一致性**：在不同页面保持导航结构的一致性
+3. **可访问性**：确保所有核心功能都能通过导航访问
+4. **响应式**：在不同设备上提供合适的导航体验
+
+通过合理设计UI导航结构，可以让用户在任务管理系统中轻松找到所需功能，提高工作效率。
+--------------------
+STEP: 识别关键用户旅途
+FILE: spec.md
+LANGUAGE: md
+CODE:
+```
+# 系统
+
+...
+
+HIGHLIGHT_CODE_START
+## 关键用户旅途
+
+### 旅途1：核心任务操作
+
+1. 用户打开应用
+2. 执行操作1
+3. 执行操作2
+4. 执行操作3
+5. 查看结果
+
+### 旅途2：查看统计数据
+
+1. 用户导航到统计页面
+2. 系统展示数据图表
+3. 用户选择查看不同维度的数据
+4. 系统更新图表显示相应数据
+5. 用户导出数据（扩展功能）
+
+HIGHLIGHT_CODE_END
+```
+
+CONTENT:
+# 识别关键用户旅途
+
+用户旅途（User Journey）描述了用户在使用任务管理系统时完成特定目标的完整过程。通过识别和优化关键用户旅途，可以提升用户体验和产品价值。
+
+## 任务管理系统的关键用户旅途
+
+对于任务管理系统，有两个核心用户旅途需要重点关注：
+
+### 旅途1：创建并完成一个任务
+
+这是任务管理系统最基本也是最重要的功能流程：
+
+1. 用户打开应用，进入任务面板
+2. 点击"新建任务"按钮，打开任务创建表单
+3. 输入任务标题和详细描述
+4. 设置任务的优先级和截止日期
+5. 保存任务，任务出现在任务列表中
+6. 在任务列表中找到刚创建的任务
+7. 点击任务完成按钮，标记任务为已完成
+8. 查看任务状态更新，确认任务已完成
+
+这个旅途涵盖了任务管理的核心操作：创建、查看、更新和完成任务。
+
+### 旅途2：查看任务统计数据
+
+数据分析是任务管理系统的重要辅助功能，帮助用户了解自己的任务完成情况：
+
+1. 用户在主导航栏中点击"统计图表"链接
+2. 系统展示任务完成率图表，包括已完成、进行中、逾期等状态的统计
+3. 用户通过时间选择器选择查看不同时间段的数据（如本周、本月、本季度）
+4. 系统动态更新图表，显示所选时间段的数据
+5. 用户可以选择导出统计数据（扩展功能），生成报告或进行进一步分析
+
+## 用户旅途设计原则
+
+设计用户旅途时应遵循以下原则：
+
+1. **完整性**：旅途应覆盖用户完成目标所需的所有关键步骤
+2. **简洁性**：尽量减少不必要的步骤，让用户能快速达成目标
+3. **一致性**：在不同旅途间保持操作逻辑的一致性
+4. **反馈性**：在关键节点提供明确的反馈，让用户了解当前状态
+
+## 旅途优化建议
+
+为了提升用户体验，可以考虑以下优化措施：
+
+1. **快捷操作**：在任务列表中提供直接完成任务的快捷按钮
+2. **智能提醒**：在任务接近截止日期时主动提醒用户
+3. **批量操作**：支持用户同时对多个任务进行相同操作
+4. **个性化视图**：允许用户自定义任务列表的显示方式和排序规则
+
+通过精心设计的用户旅途，任务管理系统能够更好地满足用户需求，提高用户满意度和使用效率。
+
+----------------------------------------
+TITLE: UI界面和表现设计
+DESCRIPTION: 学习如何为系统设计美观且用户友好的界面布局、视觉风格和交互效果
+DIFFICULTY: intermediate
+ESTIMATED_TIME: 35
+PREREQUISITES: 目标用户和功能范围
+TAGS: ui-design, visual-design, layout, aesthetics, interaction-design
+
+PROJECT_FILES:
+src/
+src/App.tsx
+src/components/
+src/components/ui/
+spec.md
+package.json
+
+STEPS:
+STEP: 设计界面布局
+FILE: spec.md
+LANGUAGE: md
+CODE:
+```
+## UI界面和表现设计
+HIGHLIGHT_CODE_START
+### 布局设计
+
+- 页面结构
+- 内容区域划分
+- 响应式断点
+- 间距系统
+HIGHLIGHT_CODE_END
+### 视觉设计
+
+- 主色调
+- 辅助色
+- 强调色
+- 字体
+- 图片
+- 品牌元素
+
+### 感官设计
+
+- 按钮效果
+- 交互反馈
+- 动效
+- 响应式
+```
+
+CONTENT:
+# 设计界面布局
+
+界面布局是UI设计的基础，它决定了用户如何与系统进行交互。良好的布局设计能够提高用户体验，让用户更容易找到所需功能。
+
+## 布局设计的核心要素
+
+在任务管理系统中，界面布局需要考虑以下几个核心要素：
+
+### 页面结构
+
+页面结构是布局设计的基础框架，通常包括：
+- 页眉区域：放置系统标识和主要导航
+- 主内容区域：展示核心功能内容
+- 侧边栏：提供辅助功能或筛选选项
+- 页脚区域：放置辅助链接和版权信息
+
+在任务管理系统中，页面结构需要确保用户能够快速访问任务列表、创建新任务和查看统计数据。
+
+### 内容区域划分
+
+合理的内容区域划分能够帮助用户更好地理解和使用系统功能：
+- 任务列表区域：展示所有任务，支持排序和筛选
+- 任务详情区域：显示任务的详细信息和操作选项
+- 统计信息区域：展示任务完成情况的图表和数据
+- 操作按钮区域：放置常用的操作按钮，如新建任务、批量操作等
+
+### 响应式断点
+
+响应式设计确保系统在不同设备上都能提供良好的用户体验：
+- 大屏幕（桌面端）：充分利用屏幕空间，展示更多内容和功能
+- 中等屏幕（平板）：适当调整布局，保持核心功能的可访问性
+- 小屏幕（手机）：简化布局，突出核心功能，隐藏次要内容
+
+在任务管理系统中，响应式设计特别重要，因为用户可能在各种设备上管理任务。
+
+### 间距系统
+
+统一的间距系统能够提升界面的一致性和可读性：
+- 元素间的间距：确保界面元素之间有足够的空间，避免拥挤
+- 内容块的间距：区分不同的内容区域，提高可读性
+- 边距和填充：保持内容与边界之间的合适距离
+
+## 任务管理系统中的布局设计实践
+
+在任务管理系统中，布局设计需要特别关注以下几点：
+
+1. **任务列表的可视化呈现**：合理安排任务项的排列方式，确保用户能够快速浏览和识别任务
+2. **操作入口的易发现性**：将常用操作（如新建任务、完成任务）放置在用户容易发现的位置
+3. **信息层次的清晰性**：通过布局区分任务的优先级和状态，帮助用户快速识别重要信息
+4. **跨设备的一致性**：确保用户在不同设备上都能获得一致的操作体验
+
+通过精心设计的界面布局，任务管理系统能够为用户提供清晰、直观且高效的操作环境。
+--------------------
+STEP: 设计视觉风格
+FILE: spec.md
+LANGUAGE: md
+CODE:
+```
+...
+## UI界面和表现设计
+
+### 布局设计
+
+- 页面结构
+- 内容区域划分
+- 响应式断点
+- 间距系统
+HIGHLIGHT_CODE_START
+### 视觉设计
+
+- 主色调：绿色（hsl(142, 60%, 40%)）
+- 辅助色：大地色（hsl(30, 80%, 50%)）
+- 强调色：浅绿色（hsl(142, 40%, 85%)）
+- 字体
+- 图片
+- 品牌元素
+HIGHLIGHT_CODE_END
+### 感官设计
+
+- 按钮效果
+- 交互反馈
+- 动效
+- 响应式
+```
+
+CONTENT:
+# 设计视觉风格
+
+视觉设计是用户对产品的第一印象，它通过色彩、字体、图像等元素传达品牌价值并影响用户情绪。在任务管理系统中，良好的视觉设计不仅能提升美观度，还能改善用户体验。
+
+## 视觉设计的核心要素
+
+### 色彩系统
+
+色彩是视觉设计中最重要的元素之一，合理的色彩搭配能够：
+- 建立品牌识别度
+- 引导用户注意力
+- 传达情感和信息
+- 提升界面美观度
+
+在任务管理系统中，我们采用以下色彩方案：
+- **主色调 - 绿色**：代表完成、积极和成长，用于主要操作按钮和重要信息
+- **辅助色 - 大地色**：提供温暖和稳定感，用于次要元素和界面装饰
+- **强调色 - 浅绿色**：用于背景和选中状态，创建视觉焦点
+
+### 字体设计
+
+字体选择对用户体验有重要影响：
+- **字体系列**：选择清晰易读的无衬线字体
+- **字号层次**：通过不同字号区分标题、正文和辅助信息
+- **字重对比**：使用不同字重创建视觉层次
+
+在任务管理系统中，清晰的字体设计能够确保任务信息易于阅读，减少用户视觉疲劳。
+
+### 图像和图标
+
+图像和图标是界面设计中的重要视觉元素：
+- **图标设计**：使用简洁一致的图标风格，帮助用户快速理解功能
+- **图片质量**：确保图片清晰度，提升整体视觉品质
+- **适度使用**：避免过度装饰，保持界面简洁
+
+## 任务管理系统中的视觉设计实践
+
+在任务管理系统中，视觉设计需要特别关注以下几点：
+
+1. **任务状态的可视化表达**：通过颜色区分任务的不同状态（待办、进行中、已完成、逾期等）
+2. **优先级的视觉呈现**：使用颜色和图标表示任务的优先级
+3. **品牌一致性**：确保所有界面元素都符合整体视觉风格
+4. **可访问性**：确保色彩对比度符合可访问性标准，方便所有用户使用
+
+通过精心设计的视觉风格，任务管理系统能够为用户提供愉悦的使用体验，增强用户对产品的信任感。
+--------------------
+STEP: 设计交互效果
+FILE: src/components/ui/button.tsx
+LANGUAGE: typescript
+CODE:
+```
+...
+## UI界面和表现设计
+
+### 布局设计
+
+- 页面结构
+- 内容区域划分
+- 响应式断点
+- 间距系统
+
+### 视觉设计
+
+- 主色调：绿色（hsl(142, 60%, 40%)）
+- 辅助色：大地色（hsl(30, 80%, 50%)）
+- 强调色：浅绿色（hsl(142, 40%, 85%)）
+- 字体
+- 图片
+- 品牌元素
+HIGHLIGHT_CODE_START
+### 感官设计
+
+- 按钮效果
+- 交互反馈
+- 动效
+- 响应式
+HIGHLIGHT_CODE_END
+```
+
+CONTENT:
+# 设计交互效果
+
+交互设计关注用户与系统的互动过程，通过动效、反馈等手段提升用户体验。在任务管理系统中，良好的交互设计能够让用户感受到系统的响应性和友好性。
+
+## 交互设计的核心要素
+
+### 按钮效果
+
+按钮是用户最常交互的界面元素，需要精心设计：
+- **悬停效果**：鼠标悬停时的视觉变化，提示用户该元素可交互
+- **点击反馈**：点击时的动画效果，确认用户的操作已被接收
+- **状态变化**：不同状态（默认、悬停、按下、禁用）的视觉区分
+
+在任务管理系统中，按钮效果尤为重要：
+- 新建任务按钮需要吸引用户注意
+- 完成任务按钮需要给用户成就感
+- 删除任务按钮需要提醒用户谨慎操作
+
+### 操作反馈
+
+及时的操作反馈能够增强用户对系统的信任：
+- **成功反馈**：任务创建、更新或删除后的成功提示
+- **错误反馈**：操作出错时的明确提示和解决方案
+- **加载状态**：异步操作时的加载提示，减少用户焦虑
+
+在任务管理系统中，操作反馈能够帮助用户了解任务状态的变化，确保操作的有效性。
+
+### 动效设计
+
+合适的动效能够提升用户体验：
+- **页面切换动效**：平滑的过渡让用户理解界面变化
+- **元素出现动效**：新任务添加时的动画效果
+- **状态变化动效**：任务状态更新时的视觉过渡
+
+### 响应式交互
+
+不同设备上的交互体验需要保持一致：
+- **触摸优化**：移动端的触摸友好的大按钮和间距
+- **键盘导航**：支持键盘操作，提升可访问性
+- **手势操作**：移动端的手势操作支持
+
+## 任务管理系统中的交互设计实践
+
+在任务管理系统中，交互设计需要特别关注以下几点：
+
+1. **任务操作的即时反馈**：当用户完成任务时，提供视觉反馈确认操作成功
+2. **批量操作的便捷性**：支持用户同时对多个任务进行相同操作
+3. **错误处理的友好性**：当操作失败时，提供清晰的错误信息和解决方案
+4. **个性化交互**：允许用户自定义交互偏好，如动画效果的开关
+
+通过精心设计的交互效果，任务管理系统能够为用户提供流畅、直观且愉悦的使用体验。
+
