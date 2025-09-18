@@ -4,8 +4,6 @@ info:
   vars: {}
 
 envs:
-  dev:
-    branch: main
   prod:
     branch: main
 
@@ -17,12 +15,6 @@ apps:
   frontend:
     type: web_frontend
     envs:
-      dev:
-        build:
-          script: npm install; npm run build
-        provision:
-          root_path: dist
-          type: nodejs18x
       prod:
         build:
           script: npm install; npm run build
